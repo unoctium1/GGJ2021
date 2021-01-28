@@ -22,7 +22,7 @@ namespace GameJamCat
     /// <summary>
     /// The 'Singleton' class
     /// </summary>
-    public class StateManager : IStateManager
+    public sealed class StateManager : IStateManager
     {
         private static readonly StateManager _instance = new StateManager();
         
@@ -31,6 +31,7 @@ namespace GameJamCat
 
         // Explicit static constructor to tell C# compiler
         // not to mark type as beforefieldinit
+        // https://csharpindepth.com/articles/singleton#cctor
         static StateManager()
         {
         }
