@@ -1,5 +1,3 @@
-
-using System;
 using UnityEngine;
 using Gameplay;
 
@@ -23,8 +21,6 @@ namespace GameJamCat {
 
         protected void Update()
         {
-            var transform = this.transform;
-
             PlayerInput input;
             PlayerInput.Update(out input);
 
