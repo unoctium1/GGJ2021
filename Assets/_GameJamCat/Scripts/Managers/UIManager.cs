@@ -9,7 +9,6 @@ namespace GameJamCat
         /// </summary>
         public void Initialize()
         {
-            
         }
 
         /// <summary>
