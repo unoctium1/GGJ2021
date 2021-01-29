@@ -34,14 +34,7 @@ namespace GameJamCat
 
         private void OpenCloseMenu()
         {
-            if (_isMenuOpen)
-            {
-                transform.localScale = Vector3.zero;
-            }
-            else
-            {
-                transform.localScale = Vector3.one;
-            }
+            transform.localScale = _isMenuOpen ? Vector3.zero : Vector3.one;
 
             _isMenuOpen = !_isMenuOpen;
         }
