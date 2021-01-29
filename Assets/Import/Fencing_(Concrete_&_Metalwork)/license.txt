@@ -1,0 +1,11 @@
+Model Information:
+* title:	Fencing (Concrete & Metalwork)
+* source:	https://sketchfab.com/3d-models/fencing-concrete-metalwork-fed56b40c508447493735bdaeaa0ce6a
+* author:	scadl (https://sketchfab.com/scadl)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Fencing (Concrete & Metalwork)" (https://sketchfab.com/3d-models/fencing-concrete-metalwork-fed56b40c508447493735bdaeaa0ce6a) by scadl (https://sketchfab.com/scadl) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
