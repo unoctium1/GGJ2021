@@ -416,7 +416,7 @@ GameObject:
   - component: {fileID: 2114706412015972104}
   - component: {fileID: 1134363299360857560}
   - component: {fileID: 8841930843395744432}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: GLTFNode_124
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2329,7 +2329,7 @@ GameObject:
   - component: {fileID: 7502413328676917942}
   - component: {fileID: 612395883572661003}
   - component: {fileID: 4157215406649255104}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: GLTFNode_123
   m_TagString: Untagged
   m_Icon: {fileID: 0}
