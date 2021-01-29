@@ -11,7 +11,8 @@ namespace GameJamCat
         [SerializeField]
         private int _lives = 3;
 
-        [Title("Managers")]
+        [Title("Managers")] 
+        [SerializeField] private PlayerController _playerController = null;
         [SerializeField] private CatManager _catManager = null;
         [SerializeField] private TimeManager _timeManager = null;
         [SerializeField] private UIManager _uiManager = null;
