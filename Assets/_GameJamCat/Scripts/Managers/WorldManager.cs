@@ -5,6 +5,8 @@ namespace GameJamCat
 {
     public class WorldManager : MonoBehaviour
     {
+        private readonly IStateManager _stateManager = StateManager.Instance;
+        
         [Title("Properties")]
         [SerializeField]
         private int _lives = 3;
