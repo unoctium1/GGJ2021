@@ -24,6 +24,7 @@ namespace GameJamCat
             if (_blackScreen != null)
             {
                 _blackScreen.CrossFadeAlpha(alphaValue, _fadeInDuration, true);
+                StopCoroutine(FadeCountDown());
                 StartCoroutine(FadeCountDown());
             }
         }
