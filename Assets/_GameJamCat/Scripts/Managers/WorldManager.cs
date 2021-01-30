@@ -19,9 +19,21 @@ namespace GameJamCat
         
         private void OnEnable()
         {
-            _catManager.Initialize();
-            _uiManager.Initialize();
-            _timeManager.Initialize();
+            if (_catManager != null)
+            {
+                _catManager.Initialize();
+                _catManager.OnSelectedCatToFind += HandleOnCatChose;
+            }
+
+            if (_uiManager != null)
+            {
+                _uiManager.Initialize();
+            }
+
+            if (_timeManager != null)
+            {
+                _timeManager.Initialize();
+            }
         }
 
         private void Start()
@@ -31,9 +43,28 @@ namespace GameJamCat
 
         private void OnDisable()
         {
-            _catManager.CleanUp();
-            _uiManager.CleanUp();
-            _timeManager.CleanUp();
+            if (_catManager != null)
+            {
+                _catManager.CleanUp();
+                _catManager.OnSelectedCatToFind -= HandleOnCatChose;
+            }
+
+            if (_uiManager != null)
+            {
+                _uiManager.CleanUp();
+            }
+
+            if (_timeManager != null)
+            {
+                _timeManager.CleanUp();
+            }
         }
+        
+        #region delegate
+        private void HandleOnCatChose(CatBehaviour cat)
+        {
+            // TODO - update dossier
+        }
+        #endregion
     }
 }
