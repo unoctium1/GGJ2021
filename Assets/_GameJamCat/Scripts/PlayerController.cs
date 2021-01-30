@@ -8,6 +8,8 @@ namespace GameJamCat {
     [RequireComponent(typeof(CharacterController))]
     public class PlayerController : MonoBehaviour
     {
+        private readonly IStateManager _stateManager = StateManager.Instance;
+        
         public CharacterController characterController { get; private set; }
         public PlayerCharacter playerCharacter { get; private set; }
 
@@ -21,6 +23,11 @@ namespace GameJamCat {
 
         protected void Update()
         {
+            if (_stateManager.GetState() != State.Play)
+            {
+                return;
+            }
+            
             PlayerInput input;
             PlayerInput.Update(out input);
 
