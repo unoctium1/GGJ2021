@@ -4,11 +4,15 @@ namespace GameJamCat
 {
     public class UIManager : MonoBehaviour
     {
+        [SerializeField]
+        private DossierViewBehaviour _dossierView = null;
+        
         /// <summary>
         /// Initialize UIManager, setup values here
         /// </summary>
         public void Initialize()
         {
+            _dossierView.Initialize();
         }
 
         /// <summary>
