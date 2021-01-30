@@ -1074,10 +1074,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScreenTransition
       objectReference: {fileID: 0}
-    - target: {fileID: 8834899806172987441, guid: f1fbe1cb60b41db4d92ec82059dffc78,
+    - target: {fileID: 7453937146454152229, guid: f1fbe1cb60b41db4d92ec82059dffc78,
         type: 3}
-      propertyPath: _fadeInDuration
-      value: 3
+      propertyPath: m_Color.a
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1fbe1cb60b41db4d92ec82059dffc78, type: 3}

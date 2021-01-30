@@ -36,5 +36,10 @@ namespace GameJamCat
                 OnCompleteFade();
             }
         }
+
+        private void OnEnable()
+        {
+            _blackScreen.color = Color.black;
+        }
     }
 }
