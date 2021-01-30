@@ -8,7 +8,6 @@ namespace GameJamCat
 {
     public class CatManager : MonoBehaviour
     {
-        public event Action<CatBehaviour> OnGeneratedSelectedCatToFind;
         
         [Title("Managers")]
         [SerializeField] private CatFactory _catGenerator = null;
@@ -20,6 +19,8 @@ namespace GameJamCat
         private List<CatBehaviour> _activeCats;
         private CatBehaviour _chosenCatToFind = null;
 
+        public event Action<CatBehaviour> OnGeneratedSelectedCatToFind;
+        
         /// <summary>
         /// Initializes the CatManager
         /// </summary>
