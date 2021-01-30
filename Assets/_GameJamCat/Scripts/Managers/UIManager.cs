@@ -9,6 +9,7 @@ namespace GameJamCat
         
         [SerializeField] private DossierViewBehaviour _dossierView = null;
         [SerializeField] private ScreenTransitionViewBehaviour _transitionViewBehaviour = null;
+        [SerializeField] private EndGameMenu _endgameViewBehaviour = null;
         
         /// <summary>
         /// Initialize UIManager, setup values here
@@ -67,6 +68,10 @@ namespace GameJamCat
                 case State.Dialogue:
                     break;
                 case State.EndGame:
+                    if (_endgameViewBehaviour != null)
+                    {
+                        _endgameViewBehaviour.DisplayEndPanel(true); //placeholder boolean
+                    }
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(state), state, null);
