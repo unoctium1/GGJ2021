@@ -21,7 +21,11 @@ namespace GameJamCat
             }
             
             _stateManager.OnStateChanged += HandleOnStateChange;
-            _transitionViewBehaviour.OnCompleteFade += HandleOnFadeComplete;
+            
+            if (_transitionViewBehaviour != null)
+            {
+                _transitionViewBehaviour.OnCompleteFade += HandleOnFadeComplete;
+            }
         }
 
         /// <summary>
@@ -31,7 +35,24 @@ namespace GameJamCat
         {
             
         }
-        
+
+        private void OnDestroy()
+        {
+            _stateManager.OnStateChanged -= HandleOnStateChange;
+            if (_transitionViewBehaviour != null)
+            {
+                _transitionViewBehaviour.OnCompleteFade -= HandleOnFadeComplete;
+            }
+        }
+
+        private void OnPregameSet()
+        {
+            if (_transitionViewBehaviour != null) 
+            { 
+                _transitionViewBehaviour.SwitchBlackScreen(true); 
+            }
+        }
+
         #region Delegate
 
         private void HandleOnStateChange(State state)
@@ -39,7 +60,7 @@ namespace GameJamCat
             switch (state)
             {
                 case State.Pregame:
-                    _transitionViewBehaviour.SwitchBlackScreen(true);
+                    OnPregameSet();
                     break;
                 case State.Play:
                     break;
