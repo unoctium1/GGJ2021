@@ -31,13 +31,13 @@ namespace GameJamCat
         [Button]
         private void WinGame()
         {
-            StateManager.Instance.SetState(State.EndGame);
+            DisplayEndPanel(true);
         }
         
         [Button]
         private void LoseGame()
         {
-            StateManager.Instance.SetState(State.EndGame);
+            DisplayEndPanel(false);
         }
         
         public void DisplayEndPanel(bool foundCat)
