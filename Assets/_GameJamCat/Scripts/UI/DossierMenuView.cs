@@ -4,19 +4,15 @@ using UnityEngine.UI;
 
 namespace GameJamCat
 {
-    public class DossierMenu : MonoBehaviour
+    public class DossierMenuView : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI _catName = null;
         [SerializeField] private TextMeshProUGUI _catLikes = null;
         [SerializeField] private TextMeshProUGUI _cativities = null;
         [SerializeField] private RawImage _catImage = null;
 
-        [SerializeField] private KeyCode _dossierButton = KeyCode.Tab;
-
-        private bool _isMenuOpen = false;
-        
         //Tentative Use Case from UI Manager
-        public void SetupDossier(string name, string likes, string cativities, Texture2D catimage)
+        public void Initialize(KeyCode keycode, string name, string likes, string cativities, Texture2D catimage = null)
         {
             SetUIElement(_catName, name);
             SetUIElement(_catLikes, likes);
@@ -24,19 +20,9 @@ namespace GameJamCat
             SetUIElement(_catImage, catimage);
         }
 
-        private void Update()
+        public void SetDossierOpen(bool isCurrentlyOpen)
         {
-            if (Input.GetKeyDown(_dossierButton))
-            {
-                OpenCloseMenu();
-            }
-        }
-
-        private void OpenCloseMenu()
-        {
-            transform.localScale = _isMenuOpen ? Vector3.zero : Vector3.one;
-
-            _isMenuOpen = !_isMenuOpen;
+            transform.localScale = isCurrentlyOpen ? Vector3.one : Vector3.zero;
         }
 
         private void SetUIElement(TextMeshProUGUI element, string label)
