@@ -22,7 +22,7 @@ namespace GameJamCat
             if (_catManager != null)
             {
                 _catManager.Initialize();
-                _catManager.OnSelectedCatToFind += HandleOnCatChose;
+                _catManager.OnGeneratedSelectedCatToFind += HandleOnGeneratedSelectedCatToFind;
             }
 
             if (_uiManager != null)
@@ -46,7 +46,7 @@ namespace GameJamCat
             if (_catManager != null)
             {
                 _catManager.CleanUp();
-                _catManager.OnSelectedCatToFind -= HandleOnCatChose;
+                _catManager.OnGeneratedSelectedCatToFind -= HandleOnGeneratedSelectedCatToFind;
             }
 
             if (_uiManager != null)
@@ -61,7 +61,7 @@ namespace GameJamCat
         }
         
         #region delegate
-        private void HandleOnCatChose(CatBehaviour cat)
+        private void HandleOnGeneratedSelectedCatToFind(CatBehaviour cat)
         {
             // TODO - update dossier
         }
