@@ -6,9 +6,9 @@ namespace GameJamCat
     public class CatManager : MonoBehaviour
     {
         [SerializeField]
-        private CatGenerator catGenerator;
+        private CatFactory catGenerator;
 
-        List<CatBehaviour> _activeCats;
+        private List<CatBehaviour> _activeCats;
 
         /// <summary>
         /// Initializes the CatManager
@@ -25,7 +25,7 @@ namespace GameJamCat
         {
             foreach(var cat in _activeCats)
             {
-                cat.DestroyCat();
+                catGenerator.DestroyCat(cat);
             }
             _activeCats.Clear();
         }
@@ -43,6 +43,6 @@ namespace GameJamCat
     {
         CatBehaviour GetRandomCat();
 
-        void Reclaim(CatBehaviour cat);
+        void DestroyCat(CatBehaviour cat);
     }
 }

@@ -10,7 +10,7 @@ namespace GameJamCat
     /// Scriptable Object for 
     /// </summary>
     [CreateAssetMenu]
-    public class CatGenerator : ScriptableObject, ICatFactory
+    public class CatFactory : ScriptableObject, ICatFactory
     {
 
         #region SHADER_PROPERTY_IDS
@@ -27,40 +27,40 @@ namespace GameJamCat
 
 
         [SerializeField]
-        CatBehaviour _catPrefab;
+        private CatBehaviour _catPrefab;
         [SerializeField]
-        Texture2D[] _furs;
+        private Texture2D[] _furs;
         [SerializeField, ColorUsage(false)]
-        Color[] _furColors, _feetColors, _earColors;
+        private Color[] _furColors, _feetColors, _earColors;
         [SerializeField, ColorUsage(false, true)]
-        Color[] _eyeColors;
+        private Color[] _eyeColors;
 
         [SerializeField, Range(0f, 1f), Tooltip("Percent of cats with textures, relative to solid colors")]
-        float _percentTextured = 0.5f;
+        private float _percentTextured = 0.5f;
         [SerializeField, MinMaxSlider(-10.0f, 10.0f)]
-        Vector2 _textureOffsetRange = new Vector2(-5f, 5f);
+        private Vector2 _textureOffsetRange = new Vector2(-5f, 5f);
         [SerializeField, MinMaxSlider(0.0f, 5.0f)]
-        Vector2 _textureScaleRange = new Vector2(1f, 5f);
+        private Vector2 _textureScaleRange = new Vector2(1f, 5f);
         [SerializeField, MinMaxSlider(0.0f, 1.0f)]
-        Vector2 _noiseWeightRange = new Vector2(0f, 1f);
+        private Vector2 _noiseWeightRange = new Vector2(0f, 1f);
         [SerializeField, MinMaxSlider(0.0f, 10f)]
-        Vector2 _noiseScaleRange = new Vector2(0f, 5f);
+        private Vector2 _noiseScaleRange = new Vector2(0f, 5f);
 
         [SerializeField]
-        bool _poolObjects = false;
+        private bool _poolObjects = false;
         [System.NonSerialized]
-        List<CatBehaviour> _pool = null;
-        Scene _poolScene;
+        private List<CatBehaviour> _pool = null;
+        private Scene _poolScene;
 
         public CatBehaviour GetRandomCat()
         {
-            var newCat =  _poolObjects ? GetRandomCat_pooled() : GetRandomCat_unpooled();
+            var newCat =  _poolObjects ? GetRandomCatPooled() : GetRandomCatUnpooled();
             SetupCatMaterial(newCat.CatRenderer.material);
             
             return newCat;
         }
 
-        public void Reclaim(CatBehaviour cat)
+        public void DestroyCat(CatBehaviour cat)
         {
             if (!_poolObjects)
             {
@@ -96,7 +96,7 @@ namespace GameJamCat
             m.SetFloat(NoiseWeightID, GetRandom(_noiseWeightRange));
         }
 
-        private CatBehaviour GetRandomCat_pooled()
+        private CatBehaviour GetRandomCatPooled()
         {
             CatBehaviour cat;
             if (_pool == null) CreatePool();
@@ -104,7 +104,6 @@ namespace GameJamCat
             if (lastIndex <= 0)
             {
                 cat = Instantiate(_catPrefab);
-                cat.Factory = this;
                 SceneManager.MoveGameObjectToScene(cat.gameObject, _poolScene);
             }
             else
@@ -116,7 +115,7 @@ namespace GameJamCat
             return cat;
         }
 
-        private CatBehaviour GetRandomCat_unpooled()
+        private CatBehaviour GetRandomCatUnpooled()
         {
             return Instantiate(_catPrefab);
         }
@@ -124,7 +123,6 @@ namespace GameJamCat
         private void CreatePool()
         {
             _pool = new List<CatBehaviour>();
-            Debug.Log("Got here");
 #if UNITY_EDITOR //This just prevents errors if we recompile while in play mode
             _poolScene = SceneManager.GetSceneByName(name);
             if (_poolScene.isLoaded)
@@ -143,7 +141,6 @@ namespace GameJamCat
             }
 #endif
             _poolScene = SceneManager.CreateScene(name);
-            Debug.Log("And here");
         }
 
         private T GetRandom<T>(T[] array)

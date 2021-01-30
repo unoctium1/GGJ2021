@@ -6,9 +6,9 @@ namespace GameJamCat
 {
     public class TestCatGenerator : MonoBehaviour
     {
-        [SerializeField] CatGenerator catGen;
+        [SerializeField] private CatFactory catGen;
 
-        [SerializeField] bool spawn = true;
+        [SerializeField] private bool spawn = true;
 
         // Update is called once per frame
         IEnumerator Start()
