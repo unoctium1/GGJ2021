@@ -1,3 +1,5 @@
+using System;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -8,6 +10,8 @@ namespace GameJamCat
     public class DossierMenuView : MonoBehaviour
     {
         private const string DossierText = "likes {0}";
+        private const float AnimationDossierDistance = 970;
+        private const float AnimationDuration = 0.5f;
 
         [Title("Poster Cat Image")]
         [SerializeField] private RawImage _catImage = null;
@@ -27,11 +31,18 @@ namespace GameJamCat
             SetUIElement(_catLikes, likes);
             SetUIElement(_cativities, cativities);
             SetUIElement(_catImage, catimage);
+            
+            var rectTransform = GetComponent<RectTransform>();
+            // Top
+            rectTransform.offsetMax = new Vector2(rectTransform.offsetMax.x, -AnimationDossierDistance);
+            // Bottom
+            rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, -AnimationDossierDistance);
         }
 
         public void SetDossierOpen(bool isCurrentlyOpen)
         {
-            transform.localScale = isCurrentlyOpen ? Vector3.one : Vector3.zero;
+            var moveDirection = isCurrentlyOpen ? Vector3.up : Vector3.down;
+            transform.DOBlendableLocalMoveBy(moveDirection * AnimationDossierDistance, AnimationDuration, true);
         }
 
         private void SetName(string catName)
