@@ -15,6 +15,8 @@ namespace GameJamCat
 
         [Title("Properties")] 
         [SerializeField] private int _catsToSpawn = 1;
+        [SerializeField, MinMaxSlider(0.5f, 3.0f)]
+        private Vector2 _catScaleRange = new Vector2(0.5f, 0.5f);
 
         private List<CatBehaviour> _activeCats;
         private CatBehaviour _chosenCatToFind = null;
@@ -63,7 +65,8 @@ namespace GameJamCat
         {
             CatBehaviour cat = _catGenerator.GetRandomCat();
             var position = _spawnArea.GetRandomUnitWithSphere();
-            cat.Initialize(position);
+            var scale = Utilities.GetRandom(_catScaleRange);
+            cat.Initialize(position, new Vector3(scale, scale, scale));
             _activeCats.Add(cat);
             return cat;
         }
