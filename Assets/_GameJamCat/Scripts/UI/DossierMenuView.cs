@@ -42,7 +42,7 @@ namespace GameJamCat
         public void SetDossierOpen(bool isCurrentlyOpen)
         {
             var moveDirection = isCurrentlyOpen ? Vector3.up : Vector3.down;
-            transform.transform.DOBlendableLocalMoveBy(moveDirection * AnimationDossierDistance, AnimationDuration, true);
+            transform.DOBlendableLocalMoveBy(moveDirection * AnimationDossierDistance, AnimationDuration, true);
         }
 
         private void SetName(string catName)
