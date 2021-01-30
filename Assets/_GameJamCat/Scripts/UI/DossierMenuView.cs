@@ -12,7 +12,7 @@ namespace GameJamCat
         [SerializeField] private RawImage _catImage = null;
 
         //Tentative Use Case from UI Manager
-        public void Initialize(KeyCode keycode, string name, string likes, string cativities, Texture2D catimage = null)
+        public void Initialize(string name, string likes, string cativities, Texture2D catimage = null)
         {
             SetUIElement(_catName, name);
             SetUIElement(_catLikes, likes);

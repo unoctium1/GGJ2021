@@ -20,9 +20,13 @@ namespace GameJamCat
         
         public void Initialize()
         {
-            _dossierMenuView.Initialize(_dossierButton, "Mittens", "Fish", "Reading");
+            if (_dossierMenuView != null)
+            {
+                _dossierMenuView.Initialize("Mittens", "Fish", "Reading");
+                _dossierMenuView.SetDossierOpen(_isDossierOpen);
+            }
+
             SetPressToOpenCloseText();
-            _dossierMenuView.SetDossierOpen(_isDossierOpen);
         }
 
         public void CleanUp()
@@ -35,7 +39,11 @@ namespace GameJamCat
             if (Input.GetKeyDown(_dossierButton))
             {
                 _isDossierOpen = !_isDossierOpen;
-                _dossierMenuView.SetDossierOpen(_isDossierOpen);
+                if (_dossierMenuView != null)
+                {
+                    _dossierMenuView.SetDossierOpen(_isDossierOpen);
+                }
+
                 SetPressToOpenCloseText();
             }
         }
@@ -43,7 +51,10 @@ namespace GameJamCat
         private void SetPressToOpenCloseText()
         {
             var openOrClose = _isDossierOpen ? CloseLabel : OpenLabel;
-            _pressToOpenClose.text = string.Format(InstructionalLabel, _dossierButton.ToString(), openOrClose);
+            if (_pressToOpenClose != null)
+            {
+                _pressToOpenClose.text = string.Format(InstructionalLabel, _dossierButton.ToString(), openOrClose);
+            }
         }
 
     }
