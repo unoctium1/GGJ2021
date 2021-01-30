@@ -6,16 +6,50 @@ namespace GameJamCat
 {
     public class CatBehaviour : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
+        [SerializeField] private Renderer _catRenderer;
+
+        private ICatFactory _factory = null;
+
+        public ICatFactory Factory
         {
-        
+            get => _factory;
+            set
+            {
+                if (_factory == null) _factory = value;
+                else
+                {
+                    Debug.LogError("Shouldn't reassign cat factory");
+                }
+            }
         }
 
-        // Update is called once per frame
-        void Update()
+
+        public Renderer CatRenderer { get => _catRenderer; }
+
+        /// <summary>
+        /// Recycle Cat
+        /// </summary>
+        public void DestroyCat()
         {
-        
+            Factory.Reclaim(this);
+        }
+
+        /// <summary>
+        /// Called by the CatManager when a cat is grabbed from the pool
+        /// </summary>
+        public void Initialize()
+        {
+            gameObject.SetActive(true);
+        }
+
+        private void Start()
+        {
+            
+        }
+
+        private void Update()
+        {
+
         }
     }
 }
