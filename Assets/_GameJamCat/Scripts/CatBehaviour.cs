@@ -6,16 +6,28 @@ namespace GameJamCat
 {
     public class CatBehaviour : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
+        [SerializeField] private Renderer _catRenderer;
+
+
+        public Renderer CatRenderer => _catRenderer;
+
+
+        /// <summary>
+        /// Called by the CatManager when a cat is grabbed from the pool
+        /// </summary>
+        public void Initialize()
         {
-        
+            gameObject.SetActive(true);
         }
 
-        // Update is called once per frame
-        void Update()
+        private void Start()
         {
-        
+            
+        }
+
+        private void Update()
+        {
+
         }
     }
 }
