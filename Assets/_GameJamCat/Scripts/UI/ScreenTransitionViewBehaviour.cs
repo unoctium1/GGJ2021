@@ -40,7 +40,10 @@ namespace GameJamCat
 
         private void OnEnable()
         {
-            _blackScreen.color = Color.black;
+            if (_blackScreen != null)
+            {
+                _blackScreen.color = Color.black;
+            }
         }
     }
 }
