@@ -257,8 +257,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: START GAME
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d792e2dc276593c4ab7900514d367d26, type: 2}
-  m_sharedMaterial: {fileID: 6530025793157268521, guid: d792e2dc276593c4ab7900514d367d26,
+  m_fontAsset: {fileID: 11400000, guid: 2eac8eb1de56efb43abe485c6b1e31f4, type: 2}
+  m_sharedMaterial: {fileID: 8494476355047336567, guid: 2eac8eb1de56efb43abe485c6b1e31f4,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -289,7 +289,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
