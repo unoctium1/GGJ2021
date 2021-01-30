@@ -24,6 +24,11 @@ namespace GameJamCat
             _timeManager.Initialize();
         }
 
+        private void Start()
+        {
+            _stateManager.SetState(State.Pregame);
+        }
+
         private void OnDisable()
         {
             _catManager.CleanUp();
