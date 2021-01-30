@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,13 +9,14 @@ namespace GameJamCat
     {
         private const float AnimationPawDistance = 1000;
 
+        [Title("Components")]
         [SerializeField] private GameObject _certificate = null;
         [SerializeField] private Button _winReplayButton = null;
         
-        [SerializeField]
-        private float _animationDuration = 1.5f;
-
+        [Title("Properties")]
+        [SerializeField] private float _animationDuration = 1.5f;
         [SerializeField] private float _animationCertificateDuration = 1.0f;
+        
         public void Initialize()
         {
             var rectTransform = GetComponent<RectTransform>();
