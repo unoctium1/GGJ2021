@@ -78,22 +78,22 @@ namespace GameJamCat
             {
                 //Texture the cat
                 // Todo: it would be neat to assign some color variance alongside the texture
-                m.SetTexture(FurMapID, GetRandom(_furs));
-                m.SetVector(FurOffsetID, new Vector2(GetRandom(_textureOffsetRange), GetRandom(_textureOffsetRange)));
-                m.SetVector(FurScaleID, new Vector2(GetRandom(_textureScaleRange), GetRandom(_textureScaleRange)));
+                m.SetTexture(FurMapID, Utilities.GetRandom(_furs));
+                m.SetVector(FurOffsetID, new Vector2(Utilities.GetRandom(_textureOffsetRange), Utilities.GetRandom(_textureOffsetRange)));
+                m.SetVector(FurScaleID, new Vector2(Utilities.GetRandom(_textureScaleRange), Utilities.GetRandom(_textureScaleRange)));
                 m.SetColor(FurColorID, Color.white);
             }
             else
             {
                 //Leave texture null and assign a color
                 //m.SetTex
-                m.SetColor(FurColorID, GetRandom(_furColors));
+                m.SetColor(FurColorID, Utilities.GetRandom(_furColors));
             }
-            m.SetColor(FeetColorID, GetRandom(_feetColors));
-            m.SetColor(EarColorID, GetRandom(_earColors));
-            m.SetColor(EyeColorID, GetRandom(_eyeColors));
-            m.SetFloat(NoiseScaleID, GetRandom(_noiseScaleRange));
-            m.SetFloat(NoiseWeightID, GetRandom(_noiseWeightRange));
+            m.SetColor(FeetColorID, Utilities.GetRandom(_feetColors));
+            m.SetColor(EarColorID, Utilities.GetRandom(_earColors));
+            m.SetColor(EyeColorID, Utilities.GetRandom(_eyeColors));
+            m.SetFloat(NoiseScaleID, Utilities.GetRandom(_noiseScaleRange));
+            m.SetFloat(NoiseWeightID, Utilities.GetRandom(_noiseWeightRange));
         }
 
         private CatBehaviour GetRandomCatPooled()
@@ -141,16 +141,6 @@ namespace GameJamCat
             }
 #endif
             _poolScene = SceneManager.CreateScene(name);
-        }
-
-        private T GetRandom<T>(T[] array)
-        {
-            return array[Random.Range(0, array.Length)];
-        }
-
-        private float GetRandom(Vector2 range)
-        {
-            return Random.Range(range.x, range.y);
         }
     }
 }

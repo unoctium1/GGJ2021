@@ -15,8 +15,9 @@ namespace GameJamCat
         /// <summary>
         /// Called by the CatManager when a cat is grabbed from the pool
         /// </summary>
-        public void Initialize()
+        public void Initialize(Vector3 spawnPosition)
         {
+            transform.position = spawnPosition;
             gameObject.SetActive(true);
         }
 

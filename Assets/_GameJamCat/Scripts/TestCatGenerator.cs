@@ -23,8 +23,7 @@ namespace GameJamCat
                     randomPos = transform.TransformPoint(randomPos);
                     randomPos.y = 0;
                     var cat = catGen.GetRandomCat();
-                    cat.transform.position = randomPos;
-                    cat.Initialize();
+                    cat.Initialize(randomPos);
                 }
                 yield return null;
             }
