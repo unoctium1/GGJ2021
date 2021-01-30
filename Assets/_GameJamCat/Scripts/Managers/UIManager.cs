@@ -27,6 +27,11 @@ namespace GameJamCat
             {
                 _transitionViewBehaviour.OnCompleteFade += HandleOnFadeComplete;
             }
+
+            if (_endgameViewBehaviour != null)
+            {
+                _endgameViewBehaviour.Initialize();
+            }
         }
 
         /// <summary>
