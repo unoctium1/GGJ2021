@@ -149,8 +149,8 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _NoiseScale: 2
-    - _NoiseWeight: 0.46
+    - _NoiseScale: 1
+    - _NoiseWeight: 0.25
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueOffset: 0
@@ -166,11 +166,13 @@ Material:
     - Color_fd4775e03e4a4b049fad85f36bbef5fb: {r: 1, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EarColor: {r: 1, g: 0, b: 0, a: 0}
+    - _EarColor: {r: 1, g: 0.69411767, b: 0.69411767, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _EyeColor: {r: 1, g: 0.94509804, b: 0, a: 0}
-    - _FeetColor: {r: 1, g: 1, b: 1, a: 0}
-    - _FurColor: {r: 1, g: 0.5763889, b: 0, a: 0}
-    - _MainColor: {r: 0.34021002, g: 0.6509434, b: 0.5813187, a: 0}
+    - _EyeColor: {r: 1, g: 0.94509804, b: 0.09411765, a: 1}
+    - _FeetColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FurColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FurOffset: {r: 0, g: 0, b: 0, a: 0}
+    - _FurScale: {r: 1, g: 1, b: 0, a: 0}
+    - _MainColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_BuildTextureStacks: []
