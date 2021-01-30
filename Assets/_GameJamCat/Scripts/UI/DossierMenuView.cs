@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,10 +7,16 @@ namespace GameJamCat
 {
     public class DossierMenuView : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI _catName = null;
-        [SerializeField] private TextMeshProUGUI _catLikes = null;
-        [SerializeField] private TextMeshProUGUI _cativities = null;
+        [Title("Poster Cat Image")]
         [SerializeField] private RawImage _catImage = null;
+        [Title("Name")]
+        [SerializeField] private TextMeshProUGUI _catName = null;
+        [Title("Likes")] 
+        [SerializeField] private Image _catLikesImage = null;
+        [SerializeField] private TextMeshProUGUI _catLikes = null;
+        [Title("Cativities")]
+        [SerializeField] private Image _catActivitiesImage = null;
+        [SerializeField] private TextMeshProUGUI _cativities = null;
 
         //Tentative Use Case from UI Manager
         public void Initialize(string name, string likes, string cativities, Texture2D catimage = null)
