@@ -64,6 +64,11 @@ namespace GameJamCat
             }
         }
 
+        public void SetUpDossier(CatBehaviour targetCat)
+        {
+            //TODO
+        }
+
         private void OnDestroy()
         {
             CleanUp();
