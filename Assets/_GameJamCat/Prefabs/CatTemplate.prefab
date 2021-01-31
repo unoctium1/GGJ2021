@@ -24,8 +24,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4579945608335828976}
-  m_LocalRotation: {x: 0.029380333, y: 0.970033, z: -0.15255985, w: 0.18681122}
-  m_LocalPosition: {x: -0.3199997, y: 0.46, z: 0.95000076}
+  m_LocalRotation: {x: 0.029380307, y: 0.970033, z: -0.15255994, w: 0.18681093}
+  m_LocalPosition: {x: -0.31999946, y: 0.46, z: 0.9500005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6013295563037192757}
@@ -2199,11 +2199,11 @@ MonoBehaviour:
     animationBool: isWalking
     maxStateTime: 20
     moveSpeed: 2
-    turnSpeed: 120
+    turnSpeed: 150
   - stateName: Running
     animationBool: isRunning
     maxStateTime: 5
-    moveSpeed: 10
+    moveSpeed: 4
     turnSpeed: 200
   attackingStates:
   - stateName: Attack
@@ -2213,15 +2213,15 @@ MonoBehaviour:
     animationBool: isDead
   species: Cat
   stats: {fileID: 11400000, guid: dbe9e93337452e549825f00a2450fc95, type: 2}
-  wanderZone: 5
-  awareness: 30
-  scent: 30
-  constainedToWanderZone: 0
+  wanderZone: 8
+  awareness: 4.06
+  scent: 4.3
+  constainedToWanderZone: 1
   nonAgressiveTowards: []
   matchSurfaceRotation: 0
-  surfaceRotationSpeed: 2
+  surfaceRotationSpeed: 1
   logChanges: 0
-  showGizmos: 0
+  showGizmos: 1
   drawWanderRange: 1
   drawScentRange: 1
   drawAwarenessRange: 1
@@ -2246,18 +2246,18 @@ NavMeshAgent:
   m_GameObject: {fileID: 8257032649680236310}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Radius: 0.26
+  m_Speed: 2
+  m_Acceleration: 0.25
   avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_AngularSpeed: 100
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
+  m_BaseOffset: -0.05
+  m_WalkableMask: 1
   m_ObstacleAvoidanceType: 4
 --- !u!114 &-6268961641354832923
 MonoBehaviour:
@@ -2271,7 +2271,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8214f2c454c3b1d4797b2151f9c4d19e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _catRenderer: {fileID: 8320239277463156604}
+  _catDialogue:
+    _catName: 
+    _catNameAnswer: 
+    _catFoodAnswer: 
+    _catActivityAnswer: 
+    _food: 0
+    _toy: 0
+    _flavourText: 
 --- !u!320 &5422291744170338466
 PlayableDirector:
   m_ObjectHideFlags: 0
