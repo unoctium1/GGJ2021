@@ -793,8 +793,7 @@ MonoBehaviour:
   m_text: Press Tab To Open Dossier
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2eac8eb1de56efb43abe485c6b1e31f4, type: 2}
-  m_sharedMaterial: {fileID: 8494476355047336567, guid: 2eac8eb1de56efb43abe485c6b1e31f4,
-    type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 59ea9009e34679a45a4c149c2452b042, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -818,8 +817,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 46.82
+  m_fontSizeBase: 46.82
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
