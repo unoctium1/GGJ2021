@@ -21,6 +21,8 @@ namespace GameJamCat {
         private CatBehaviour _currentCatInFocus = null;
         private const float _maxReticleDistance = 5f;
 
+        private bool _cameraAnimationInProgress = false;
+
         protected void Awake()
         {
             characterController = GetComponent<CharacterController>();
@@ -30,6 +32,18 @@ namespace GameJamCat {
 
         protected void Update()
         {
+            // THIS IS TEMPORARY: EXITS FROM FOCUS MODE
+            // end conversation should be called from a UI button once we have the text options
+            if (_stateManager.GetState() == State.Dialogue && _cameraAnimationInProgress == true)
+            {
+                if (Input.GetKeyDown(KeyCode.Mouse0))
+                {
+                    if (_currentCatInFocus == null) return;
+                    _currentCatInFocus.EndConversation();
+                    _stateManager.SetState(State.Play);
+                }
+            }
+
             if (_stateManager.GetState() != State.Play && _activateControllerDebug == false)
             {
                 return;
@@ -43,7 +57,8 @@ namespace GameJamCat {
 
             if (playerCharacter)
                 playerCharacter.Simulate(characterController, input);
-            FocusObjectUpdate();
+            if (_cameraAnimationInProgress == false)
+                FocusObjectUpdate();
         }
 
         protected void LateUpdate()
@@ -80,19 +95,27 @@ namespace GameJamCat {
                     {
                         _currentCatInFocus = hit.collider.gameObject.GetComponent<CatBehaviour>();
                         _currentCatInFocus.BeginConversation();
-                    }
-                    if (Input.GetKeyDown(KeyCode.Mouse0))
-                    {
-                        if (_currentCatInFocus == null) return;
-                        _currentCatInFocus.EndConversation();
+                        _cameraAnimationInProgress = true;
                     }
                 }
             }
         }
 
+        /// <summary>
+        /// Event calls this from the timeline. Ensures we stay focused on the 'current' cat
+        /// </summary>
         public void PauseTimelineForCat()
         {
             _currentCatInFocus.StopTimeline();
+            _stateManager.SetState(State.Dialogue);
+        }
+        
+        /// <summary>
+        /// Stops spam of the camera 
+        /// </summary>
+        public void CameraAnimationEnded()
+        {
+            _cameraAnimationInProgress = false;
         }
     }
 }

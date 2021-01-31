@@ -9,8 +9,8 @@ namespace GameJamCat
     public class CatBehaviour : MonoBehaviour
     {
         [SerializeField] private Renderer _catRenderer;
-        private PlayableDirector playableDirector;
-        private CinemachineVirtualCamera playerVirtualCamera;
+        private PlayableDirector _playableDirector;
+        private CinemachineVirtualCamera _playerVirtualCamera;
 
         public Renderer CatRenderer { get; private set; }
 
@@ -19,9 +19,7 @@ namespace GameJamCat
         /// </summary>
         public void Initialize(Vector3 spawnPosition)
         {
-            playableDirector = GetComponent<PlayableDirector>();
             transform.position = spawnPosition;
-            SetupVirtualCams();
             gameObject.SetActive(true);
         }
 
@@ -38,11 +36,12 @@ namespace GameJamCat
         private void Awake()
         {
             CatRenderer = GetComponentInChildren<Renderer>();
+            _playableDirector = GetComponent<PlayableDirector>();
         }
 
-        private void Update()
+        private void Start()
         {
-
+            SetupVirtualCams();
         }
 
         /// <summary>
@@ -50,20 +49,20 @@ namespace GameJamCat
         /// </summary>
         private void SetupVirtualCams()
         {
-            foreach (var output in playableDirector.playableAsset.outputs)
+            foreach (var output in _playableDirector.playableAsset.outputs)
             {
                 if (output.streamName == "Dialouge")
                 {
                     CinemachineBrain cinemachine = Camera.main.GetComponent<CinemachineBrain>();
                     CinemachineVirtualCamera playerVirtualCamera = cinemachine.transform.parent.GetComponentInChildren<CinemachineVirtualCamera>();
-                    playableDirector.SetGenericBinding(output.sourceObject, Camera.main.GetComponent<CinemachineBrain>());
+                    _playableDirector.SetGenericBinding(output.sourceObject, Camera.main.GetComponent<CinemachineBrain>());
                     var cinemachineTrack = output.sourceObject as CinemachineTrack;
                     foreach (var clip in cinemachineTrack.GetClips())
                     {
                         if (clip.displayName == "Player")
                         {
                             var cinemachineShot = clip.asset as CinemachineShot;
-                            playableDirector.SetReferenceValue(cinemachineShot.VirtualCamera.exposedName, playerVirtualCamera);
+                            _playableDirector.SetReferenceValue(cinemachineShot.VirtualCamera.exposedName, playerVirtualCamera);
                         }
                     }
                 }
@@ -75,7 +74,7 @@ namespace GameJamCat
         /// </summary>
         public void BeginConversation()
         {
-            playableDirector.Play();
+            _playableDirector.Play();
         }
 
         /// <summary>
@@ -83,16 +82,15 @@ namespace GameJamCat
         /// </summary>
         public void EndConversation()
         {
-            playableDirector.Resume();
+            _playableDirector.Resume();
         }
 
         /// <summary>
-        /// Stops camera animation so we stay on the cat
+        /// Stops camera animation so we stay focused on the cat
         /// </summary>
         public void StopTimeline()
         {
-            Debug.Log("=========Pause+======");
-            playableDirector.Pause();
+            _playableDirector.Pause();
         }
     }
 }

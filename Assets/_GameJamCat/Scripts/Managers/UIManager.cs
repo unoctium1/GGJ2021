@@ -101,6 +101,7 @@ namespace GameJamCat
                     OnPregameSet();
                     break;
                 case State.Play:
+                    SetCrossHairState(true);
                     break;
                 case State.Dialogue:
                     OnDialogueSet();
