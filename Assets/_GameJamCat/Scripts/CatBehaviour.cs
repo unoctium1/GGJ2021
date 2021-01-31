@@ -14,10 +14,13 @@ namespace GameJamCat
         private const string PlayerConstant = "Player";
         private PlayableDirector _playableDirector;
         private CinemachineVirtualCamera _playerVirtualCamera;
+        [SerializeField] Transform[] _renderTextureCamLocations;
 
         public Renderer CatRenderer { get; private set; }
 
         public CatCustomisation CatDialogue { get => _catDialogue; set => _catDialogue = value; }
+
+        public Texture2D CatScreenshot { get; private set; } = null;
 
         /// <summary>
         /// Called by the CatManager when a cat is grabbed from the pool
@@ -97,5 +100,11 @@ namespace GameJamCat
         {
             _playableDirector.Pause();
         }
+
+        public Transform GetCameraLocation()
+        {
+            return Utilities.GetRandom(_renderTextureCamLocations);
+        }
+
     }
 }

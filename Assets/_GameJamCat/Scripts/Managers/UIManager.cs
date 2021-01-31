@@ -88,7 +88,18 @@ namespace GameJamCat
 
         public void SetUpDossier(CatBehaviour targetCat)
         {
-            _dossierView.SetTargetCat(targetCat.CatDialogue);
+            if(_dossierView != null)
+            {
+                _dossierView.SetTargetCat(targetCat.CatDialogue);
+            }
+        }
+
+        public void SetUpDossierTexture(Texture catTex)
+        {
+            if(_dossierView != null)
+            {
+                _dossierView.SetCatImage(catTex);
+            }
         }
 
         private void OnDestroy()

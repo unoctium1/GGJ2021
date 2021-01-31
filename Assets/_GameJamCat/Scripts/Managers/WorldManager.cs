@@ -33,6 +33,7 @@ namespace GameJamCat
             if (_catManager != null)
             {
                 _catManager.OnGeneratedSelectedCatToFind += HandleOnGeneratedSelectedCatToFind;
+                _catManager.OnGeneratedCatTexture += HandleOnGeneratedCatTexture;
                 _catManager.Initialize();
             }
 
@@ -84,6 +85,7 @@ namespace GameJamCat
             {
                 _catManager.CleanUp();
                 _catManager.OnGeneratedSelectedCatToFind -= HandleOnGeneratedSelectedCatToFind;
+                _catManager.OnGeneratedCatTexture -= HandleOnGeneratedCatTexture;
             }
 
             if (_uiManager != null)
@@ -96,6 +98,11 @@ namespace GameJamCat
         private void HandleOnGeneratedSelectedCatToFind(CatBehaviour cat)
         {
             _uiManager.SetUpDossier(cat);
+        }
+
+        private void HandleOnGeneratedCatTexture(Texture tex)
+        {
+            _uiManager.SetUpDossierTexture(tex);
         }
 
         private void HandleOnEndConversation()

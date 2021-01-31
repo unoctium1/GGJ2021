@@ -46,6 +46,11 @@ namespace GameJamCat
             SetUIElement(_catImage, catimage);
         }
 
+        public void SetTexture(Texture catimage)
+        {
+            SetUIElement(_catImage, catimage);
+        }
+
         public void Initialize()
         {
             var rectTransform = GetComponent<RectTransform>();
@@ -77,11 +82,12 @@ namespace GameJamCat
             }
         }
 
-        private void SetUIElement(RawImage element, Texture2D image)
+        private void SetUIElement(RawImage element, Texture image, float duration = 0.5f)
         {
             if (element != null && image != null)
             {
                 element.texture = image;
+                element.DOFade(1f, duration);
             }
         }
 
