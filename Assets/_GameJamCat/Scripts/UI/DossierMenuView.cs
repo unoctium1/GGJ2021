@@ -12,6 +12,9 @@ namespace GameJamCat
         private const string DossierText = "likes {0}";
         private const float AnimationDuration = 0.5f;
 
+        [Title("Placeholder Values")]
+        [SerializeField] private Texture2D _defaultTex;
+
         [Title("Poster Cat Image")]
         [SerializeField] private RawImage _catImage = null;
         [Title("Name")]
@@ -23,16 +26,28 @@ namespace GameJamCat
         [SerializeField] private Image _catActivitiesImage = null;
         [SerializeField] private TMP_Text _cativities = null;
 
+        [Title("Sprites")]
+        [SerializeField] Sprite _tunaIcon;
+        [SerializeField] Sprite _salmonIcon, _chickenIcon, _pumpkinIcon, _dryKibbleIcon, _wetKibbleIcon, _kibbleIcon, _boneIcon, _beefIcon = null;
+        [SerializeField] Sprite _yarnBallsIcon, _cardboardBoxIcon, _fishingRodIcon, _catnipSackIcon, _hijinksIcon, _scratchingPostIcon, _laserIcon, _tennisBall = null;
+
         private float _animationDossierDistance = 0;
         
         //Tentative Use Case from UI Manager
-        public void Initialize(string catName, string likes, string cativities, Texture2D catimage = null)
+        public void SetNewCat(CatCustomisation catDescription, Texture2D catimage = null)
         {
-            SetName(catName);
-            SetUIElement(_catLikes, likes);
-            SetUIElement(_cativities, cativities);
+            var food = GetFoodSprite(catDescription._food);
+            var cativities = GetToySprite(catDescription._toy);
+            SetName(catDescription._catName);
+            SetUIElement(_catLikes, food.Item2);
+            SetUIElement(_catLikesImage, food.Item1);
+            SetUIElement(_cativities, cativities.Item2);
+            SetUIElement(_catActivitiesImage, cativities.Item1);
             SetUIElement(_catImage, catimage);
-            
+        }
+
+        public void Initialize()
+        {
             var rectTransform = GetComponent<RectTransform>();
             // Top
             rectTransform.offsetMax = new Vector2(rectTransform.offsetMax.x, -_animationDossierDistance);
@@ -70,9 +85,50 @@ namespace GameJamCat
             }
         }
 
+        private void SetUIElement(Image element, Sprite image)
+        {
+            if (element != null && image != null)
+            {
+                element.sprite = image;
+            }
+        }
+
         private void Awake()
         {
             _animationDossierDistance = Screen.height * 0.9f;
+        }
+
+        public (Sprite,string) GetFoodSprite(Food food)
+        {
+            return food switch
+            {
+                Food.Tuna => (_tunaIcon, "TUNA"),
+                Food.Salmon => (_salmonIcon, "SALMON"),
+                Food.Chicken => (_chickenIcon, "CHICKEN"),
+                Food.Pumpkin => (_pumpkinIcon, "PUMPKIN"),
+                Food.DryKibble => (_dryKibbleIcon, "DRY KIBBLE"),
+                Food.WetKibble => (_wetKibbleIcon,"WET KIBBLE"),
+                Food.Kibble => (_kibbleIcon,"KIBBLE"),
+                Food.Bones => (_boneIcon,"BONE"),
+                Food.Beef => (_beefIcon,"BEEF"),
+                _ => (null,null)
+            };
+        }
+
+        public (Sprite, string) GetToySprite(Toy toy)
+        {
+            return toy switch
+            {
+                Toy.YarnBalls => (_yarnBallsIcon,"YARN"),
+                Toy.Hijinks => (_hijinksIcon, "HIJINKS"),
+                Toy.CardboardBox => (_cardboardBoxIcon, "A BOX"),
+                Toy.FishingRod => (_fishingRodIcon, "FISHING"),
+                Toy.CatnipSack => (_catnipSackIcon, "CATNIP"),
+                Toy.ScratchingPost => (_scratchingPostIcon, "A POST"),
+                Toy.TennisBall => (_tennisBall, "TENNIS"),
+                Toy.Laser => (_laserIcon, "LASER"),
+                _ => (null, null)
+            };
         }
     }
 }

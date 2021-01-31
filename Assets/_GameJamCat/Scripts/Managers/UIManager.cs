@@ -81,6 +81,7 @@ namespace GameJamCat
         public void SetUpDossier(CatBehaviour targetCat)
         {
             //TODO
+            _dossierView.SetTargetCat(targetCat.CatDialogue);
         }
 
         private void OnDestroy()

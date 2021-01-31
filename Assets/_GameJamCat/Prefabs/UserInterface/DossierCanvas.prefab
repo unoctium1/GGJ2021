@@ -167,12 +167,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7193baceb0bd42e4db1750adf4a78493, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _defaultTex: {fileID: 0}
   _catImage: {fileID: 1961944038490748658}
   _catName: {fileID: 5327008225703837991}
   _catLikesImage: {fileID: 9174238259352650206}
   _catLikes: {fileID: 3884666135811115517}
   _catActivitiesImage: {fileID: 665995446202220053}
   _cativities: {fileID: 1961944038163329332}
+  _tunaIcon: {fileID: 21300000, guid: da4dc7cb59fbe6d4eb97622d65c19d6d, type: 3}
+  _salmonIcon: {fileID: 21300000, guid: 12808148d29f7d84fad5acdbf2aaaadf, type: 3}
+  _chickenIcon: {fileID: 21300000, guid: d3d5bc6e1b3fd3e4bb9154b0c20d078b, type: 3}
+  _pumpkinIcon: {fileID: 21300000, guid: f1cb8f81798bb484d8f430338371e04b, type: 3}
+  _dryKibbleIcon: {fileID: 21300000, guid: 22696dddbf9c0a741be3e031dd204b82, type: 3}
+  _wetKibbleIcon: {fileID: 21300000, guid: 03929af1a02f0ac44a49142390c120fb, type: 3}
+  _kibbleIcon: {fileID: 21300000, guid: 22696dddbf9c0a741be3e031dd204b82, type: 3}
+  _boneIcon: {fileID: 21300000, guid: 56f6e3f2c70de7d41a7de94c063a032f, type: 3}
+  _beefIcon: {fileID: 21300000, guid: a3bba6189bdfc8749a5ce0d865b1ae26, type: 3}
+  _yarnBallsIcon: {fileID: 21300000, guid: 3711c75efe13fa64899ff8b84b9bd53f, type: 3}
+  _cardboardBoxIcon: {fileID: 21300000, guid: d421a727c22527f4d9b983c5ffe99d05, type: 3}
+  _fishingRodIcon: {fileID: 21300000, guid: eebb3401a421bb0468468e6b55afa002, type: 3}
+  _catnipSackIcon: {fileID: 21300000, guid: 27f66000a1ec86a47a72fdd43470a81c, type: 3}
+  _hijinksIcon: {fileID: 21300000, guid: 5585e5bf12eb0a14eb35e24941784d93, type: 3}
+  _scratchingPostIcon: {fileID: 21300000, guid: c5448bda9a5e4e94fa457ca6ef72fc72,
+    type: 3}
+  _laserIcon: {fileID: 21300000, guid: 82370b3440bf9614e8506ac8ae08241a, type: 3}
+  _tennisBall: {fileID: 21300000, guid: fcbc86ed071a2b34d98280c5796b1a6d, type: 3}
 --- !u!1 &1961944038163329322
 GameObject:
   m_ObjectHideFlags: 0

@@ -34,11 +34,16 @@ namespace GameJamCat
             }
         }
 
+        public void SetTargetCat(CatCustomisation catCustomisation)
+        {
+            _dossierMenuView?.SetNewCat(catCustomisation);
+        }
+
         public void Initialize()
         {
             if (_dossierMenuView != null)
             {
-                _dossierMenuView.Initialize("Mittens", "Fish", "Reading");
+                _dossierMenuView.Initialize();
                 _dossierMenuView.SetDossierOpen(_isDossierOpen);
             }
 
