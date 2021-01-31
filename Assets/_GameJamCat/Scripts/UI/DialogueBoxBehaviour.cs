@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using DG.Tweening;
 using UnityEngine;
@@ -9,6 +8,8 @@ namespace GameJamCat
 {
     public class DialogueBoxBehaviour : TextMeshProUGUI
     {
+        public event Action OnReadCompleted;
+        
         private float _speed = 50f;
 
         private RectTransform _dialougeBoxTransform;
@@ -35,12 +36,12 @@ namespace GameJamCat
             _dialougeBoxTransform = transform.parent.GetComponent<RectTransform>();
         }
 
-        public void SetCatNameInDialougeBox(string catName)
+        public void SetCatNameInDialogueBox(string catName)
         {
             _catNameTextMeshPro.text = catName;
         }
 
-        public void ResetCatDialougeBox()
+        public void ResetCatDialogueBox()
         {
             _catNameTextMeshPro.text = "?????";
         }
@@ -48,7 +49,6 @@ namespace GameJamCat
         public void ReadText(string newtext)
         {
             text = string.Empty;
-
 
             string[] subTexts = newtext.Split('<', '>');
 
@@ -98,6 +98,12 @@ namespace GameJamCat
                     }
                     subCounter++;
                 }
+
+                if (OnReadCompleted != null)
+                {
+                    OnReadCompleted();
+                }
+                
                 yield return null;
 
                 WaitForSeconds EvaluateTag(string tag)
