@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 487a353228de2464595826e32d233425, type: 3}
   m_Name: DialogueOptions
   m_EditorClassIdentifier: 
-  _pathToCSV: C:/Users/unoct/Documents/Unity/GGJ2021/Assets/_GameJamCat/CatDialogue.csv
+  _pathToCSV: Assets/_GameJamCat/CatDialogue.csv
   _catCustomizationOptions:
   - _catName: Reggie
     _catNameAnswer: My name is Reginal Von Housen Bivinhop the third. But you young
@@ -109,4 +109,81 @@ MonoBehaviour:
       cabinet to purrge the first day of the work week from our kitty calendar.
     _food: 8
     _toy: 2
+    _flavourText: 
+  - _catName: Satoshi Nekomoto
+    _catNameAnswer: 'People usually refer to me as the father of meowcoin, but my
+      real name is Satoshi Nekomoto. '
+    _catFoodAnswer: I'll usually eat whatever comes in block form, which so happens
+      to be kibble most of the time
+    _catActivityAnswer: My favourite thing to do is to sit back and watch those stonk
+      numbers go up up UP! Usually while getting high myself with some catnip
+    _food: 6
+    _toy: 4
+    _flavourText: 
+  - _catName: Slonky McBufferson
+    _catNameAnswer: Whaddup homie, I'm the infamous Slonky McBufferson... I'll let
+      you admire my muscles for free since you're still here
+    _catFoodAnswer: 8 raw eggs a day. I even eat the shells. After that is my favourite,
+      CHICKEN. I mean the actual bird chicken, I wasn't calling you a chicken, you
+      yellow-bellied lizard.
+    _catActivityAnswer: I like hitting the gym with my fellow bros, we usually will
+      try to play tennis but get distracted by the ball before anyone scores a point
+    _food: 2
+    _toy: 6
+    _flavourText: 
+  - _catName: Ada Meowlace
+    _catNameAnswer: meow meow meow meow meow meow... Wait you can actually understand
+      me? BY GOD. This is truly one for the books. I'll have to write Chuck Meowbagge
+      right away! Oh what? Sorry I had my faculties occupied, you can call me Ada
+      Meowlace, the queen of modern meowputing
+    _catFoodAnswer: I perfer to have some a little less... alive. I just can't stand
+      to see these poor animals be treated the way they do. Oh you say I'm an animal
+      as well? Well look who's talking you ape. Anywho, just leave some pumpkin for
+      my outside your door and I'll be sure its gone by tomorrow.
+    _catActivityAnswer: Multiply three paws length that by a standard whisker and
+      you have the platonic ideal of yarn. It's really that simple darling, there
+      truly isn't a better toy in all of the kingdom. Yarn will show you the patterns
+      of the universe.
+    _food: 3
+    _toy: 0
+    _flavourText: 
+  - _catName: Chuck Meowbagge
+    _catNameAnswer: Are you one of those dang musicians playing at the odd hours
+      of NOON?!? Oh you're not? Goodness sorry about that, I'm Chuck Meowbagge, inventor,
+      complainer, and the pawsitively the most handsome cat around!
+    _catFoodAnswer: All good meals come from the sea, don't you know? I'm sure Captain
+      Nemeow would agree with me. As such I do prefer tuna most of all.
+    _catActivityAnswer: 'Surely you must know that a machine will surpass our limits
+      of intellect. As such, I am determined to make this cardboard box THINK! '
+    _food: 0
+    _toy: 2
+    _flavourText: 
+  - _catName: Captain Nemeow
+    _catNameAnswer: 'Hip hip, glad to see you''ve got your land legs working there
+      chap. You can call me Captain Nemeow, I''m the proprietor of the supermarine
+      home that I call this cat body. '
+    _catFoodAnswer: Everything you need comes from the sea. Oh you say that we're
+      not situated in the marine environment right now? Trivialities good sir! For
+      land is just a solid form of the ocean. That said, would you mind fetching
+      me some salmon? Tis my favourite.
+    _catActivityAnswer: Science is the truest endevour of our time. Science with
+      a capital S. That is to say, all things have already been settled and there's
+      no need to investigate anything further. What? What has Karl Poppeow been telling
+      you? Falsifiability? Sounds like a ludicrious idea. And it's not already apart
+      of my dogmatic framework! Well, matters aside, I find lasers really neat.
+    _food: 1
+    _toy: 7
+    _flavourText: 
+  - _catName: Karl Poppeow
+    _catNameAnswer: 'The confidence you may place in what I am called can be determined
+      by this: my name is Karl Poppeow'
+    _catFoodAnswer: My favourite food could be defined as an evolution of taste.
+      This darwinian path crosses from bit to nibs, then arrives at the manifestation
+      of kibble
+    _catActivityAnswer: I've been on a quest to find the strongest catnip. I know
+      its out there, but all I can do is find stronger cat nip. Eventually I might
+      find stronger catnip, and then I'll know that the last one wasn't the stongest
+      catnip, but I can never know that I've got the stongest catnip right now.
+    _food: 6
+    _toy: 4
     _flavourText: 

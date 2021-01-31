@@ -38,7 +38,9 @@ namespace GameJamCat
 
         private void SelectCSV()
         {
-            _path.stringValue = "Assets" + EditorUtility.OpenFilePanel("Select CSV", Application.dataPath, "csv").Substring(Application.dataPath.Length);
+            var path = EditorUtility.OpenFilePanel("Select CSV", Application.dataPath, "csv");
+            if(!string.IsNullOrEmpty(path))
+                _path.stringValue = "Assets" + path.Substring(Application.dataPath.Length);
         }
 
         private void LoadCSV(DialogueOptions options)

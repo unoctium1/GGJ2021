@@ -73,6 +73,7 @@ namespace GameJamCat
         FishingRod,
         CatnipSack,
         ScratchingPost,
-        TennisBall
+        TennisBall,
+        Laser
     }
 }
