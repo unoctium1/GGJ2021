@@ -30,7 +30,11 @@ namespace GameJamCat
         /// </summary>
         public void StartWinAnimation()
         {
-            _certificate.transform.localScale = Vector3.zero;
+            if (_certificate != null)
+            {
+                _certificate.transform.localScale = Vector3.zero;
+            }
+            
             transform.DOBlendableLocalMoveBy(Vector3.up * AnimationPawDistance, _animationDuration, true)
                 .SetEase(Ease.OutQuint).OnComplete( () => 
             {
