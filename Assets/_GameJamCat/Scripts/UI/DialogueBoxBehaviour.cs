@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using DG.Tweening;
 using UnityEngine;
 
 namespace GameJamCat
@@ -9,6 +10,40 @@ namespace GameJamCat
     public class DialogueBoxBehaviour : TextMeshProUGUI
     {
         private float _speed = 50f;
+
+        private RectTransform _dialougeBoxTransform;
+
+        [SerializeField]
+        private TextMeshPro _catNameTextMeshPro;
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            _dialougeBoxTransform.DOScale(1, 0.5f).SetEase(Ease.OutBack);
+
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            _dialougeBoxTransform.DOScale(0, 0).SetEase(Ease.OutBack);
+        }
+
+        protected override void Awake()
+        {
+            base.Awake();
+            _dialougeBoxTransform = transform.parent.GetComponent<RectTransform>();
+        }
+
+        public void SetCatNameInDialougeBox(string catName)
+        {
+            _catNameTextMeshPro.text = catName;
+        }
+
+        public void ResetCatDialougeBox()
+        {
+            _catNameTextMeshPro.text = "?????";
+        }
 
         public void ReadText(string newtext)
         {
