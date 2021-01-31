@@ -16,6 +16,16 @@ namespace GameJamCat
         [SerializeField] private CatManager _catManager = null;
         [SerializeField] private TimeManager _timeManager = null;
         [SerializeField] private UIManager _uiManager = null;
+
+        public int Lives
+        {
+            get => _lives;
+            set
+            {
+                _lives = value;
+                _uiManager.SetLives(value);
+            }
+        }
         
         private void OnEnable()
         {
@@ -27,7 +37,7 @@ namespace GameJamCat
 
             if (_uiManager != null)
             {
-                _uiManager.Initialize();
+                _uiManager.Initialize(Lives);
             }
 
             if (_timeManager != null)
@@ -59,7 +69,7 @@ namespace GameJamCat
                 _timeManager.CleanUp();
             }
         }
-        
+
         #region delegate
         private void HandleOnGeneratedSelectedCatToFind(CatBehaviour cat)
         {

@@ -11,11 +11,12 @@ namespace GameJamCat
         [SerializeField] private ScreenTransitionViewBehaviour _transitionViewBehaviour = null;
         [SerializeField] private EndGameMenu _endgameViewBehaviour = null;
         [SerializeField] private GameObject _crossHair = null;
+        [SerializeField] private LivesViewBehaviour _livesView = null;
         
         /// <summary>
         /// Initialize UIManager, setup values here
         /// </summary>
-        public void Initialize()
+        public void Initialize(int lives)
         {
             if (_dossierView != null)
             {
@@ -39,6 +40,8 @@ namespace GameJamCat
             {
                 _crossHair.gameObject.SetActive(false);
             }
+
+            SetLives(lives);
         }
 
         /// <summary>
@@ -50,6 +53,14 @@ namespace GameJamCat
             if (_transitionViewBehaviour != null)
             {
                 _transitionViewBehaviour.OnCompleteFade -= HandleOnFadeComplete;
+            }
+        }
+
+        public void SetLives(int lives)
+        {
+            if (_livesView != null)
+            {
+                _livesView.SetLiveImage(lives);
             }
         }
 
