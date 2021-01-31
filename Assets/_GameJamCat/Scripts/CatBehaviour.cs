@@ -6,11 +6,8 @@ namespace GameJamCat
 {
     public class CatBehaviour : MonoBehaviour
     {
-        [SerializeField] private Renderer _catRenderer;
 
-
-        public Renderer CatRenderer => _catRenderer;
-
+        public Renderer CatRenderer { get; private set; }
 
         /// <summary>
         /// Called by the CatManager when a cat is grabbed from the pool
@@ -21,9 +18,19 @@ namespace GameJamCat
             gameObject.SetActive(true);
         }
 
-        private void Start()
+        /// <summary>
+        /// Called by the CatManager when a cat is grabbed from the pool
+        /// </summary>
+        public void Initialize(Vector3 spawnPosition, Vector3 scale)
         {
-            
+            transform.position = spawnPosition;
+            transform.localScale = scale;
+            gameObject.SetActive(true);
+        }
+
+        private void Awake()
+        {
+            CatRenderer = GetComponentInChildren<Renderer>();
         }
 
         private void Update()
