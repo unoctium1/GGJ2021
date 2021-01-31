@@ -28,6 +28,10 @@ namespace GameJamCat
 
         [SerializeField]
         private CatBehaviour _catPrefab;
+
+        [SerializeField]
+        private DialogueOptions _dialogueOptions;
+
         [SerializeField]
         private Texture2D[] _furs;
         [SerializeField, ColorUsage(false)]
@@ -56,12 +60,13 @@ namespace GameJamCat
         {
             var newCat =  _poolObjects ? GetRandomCatPooled() : GetRandomCatUnpooled();
             SetupCatMaterial(newCat.CatRenderer.material);
-            
+            newCat.CatDialogue = _dialogueOptions.GetRandomCat();
             return newCat;
         }
 
         public void DestroyCat(CatBehaviour cat)
         {
+            _dialogueOptions.RecycleCat(cat.CatDialogue);
             if (!_poolObjects)
             {
                 Destroy(cat.gameObject);

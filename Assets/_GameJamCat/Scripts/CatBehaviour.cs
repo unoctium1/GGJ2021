@@ -8,13 +8,16 @@ namespace GameJamCat
 {
     public class CatBehaviour : MonoBehaviour
     {
+        [SerializeField]
+        private CatCustomisation _catDialogue;
         private const string DialogueConstant = "Dialogue";
         private const string PlayerConstant = "Player";
-        [SerializeField] private Renderer _catRenderer;
         private PlayableDirector _playableDirector;
         private CinemachineVirtualCamera _playerVirtualCamera;
 
         public Renderer CatRenderer { get; private set; }
+
+        public CatCustomisation CatDialogue { get => _catDialogue; set => _catDialogue = value; }
 
         /// <summary>
         /// Called by the CatManager when a cat is grabbed from the pool
