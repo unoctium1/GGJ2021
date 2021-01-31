@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace GameJamCat
 {
-    public class WinPanelViewBehaviour : MonoBehaviour
+    public class PanelViewBehaviour : MonoBehaviour
     {
         private const float AnimationPawDistance = 1000;
 
