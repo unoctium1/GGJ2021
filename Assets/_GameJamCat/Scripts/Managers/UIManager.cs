@@ -10,6 +10,7 @@ namespace GameJamCat
         [SerializeField] private DossierViewBehaviour _dossierView = null;
         [SerializeField] private ScreenTransitionViewBehaviour _transitionViewBehaviour = null;
         [SerializeField] private EndGameMenu _endgameViewBehaviour = null;
+        [SerializeField] private GameObject _crossHair = null;
         
         /// <summary>
         /// Initialize UIManager, setup values here
@@ -19,6 +20,7 @@ namespace GameJamCat
             if (_dossierView != null)
             {
                 _dossierView.Initialize();
+                _dossierView.OnDossierStateChange += HandleOnDossierStateChange;
             }
             
             _stateManager.OnStateChanged += HandleOnStateChange;
@@ -27,17 +29,22 @@ namespace GameJamCat
             {
                 _transitionViewBehaviour.OnCompleteFade += HandleOnFadeComplete;
             }
+
+            if (_endgameViewBehaviour != null)
+            {
+                _endgameViewBehaviour.Initialize();
+            }
+
+            if (_crossHair != null)
+            {
+                _crossHair.gameObject.SetActive(false);
+            }
         }
 
         /// <summary>
         /// Reset UI Values here, unsubscribe or reset values here
         /// </summary>
         public void CleanUp()
-        {
-            
-        }
-
-        private void OnDestroy()
         {
             _stateManager.OnStateChanged -= HandleOnStateChange;
             if (_transitionViewBehaviour != null)
@@ -46,12 +53,42 @@ namespace GameJamCat
             }
         }
 
+        private void OnDestroy()
+        {
+            CleanUp();
+        }
+
         private void OnPregameSet()
         {
             if (_transitionViewBehaviour != null) 
             { 
                 _transitionViewBehaviour.SwitchBlackScreen(true); 
             }
+
+            SetCrossHairState(false);
+        }        
+        
+        private void OnEndGameSet()
+        {
+            SetCrossHairState(false);
+
+            if (_endgameViewBehaviour != null)
+            {
+                _endgameViewBehaviour.DisplayEndPanel(true); //placeholder boolean
+            }
+        }
+
+        private void SetCrossHairState(bool state)
+        {
+            if (_crossHair != null)
+            {
+                _crossHair.SetActive(state);
+            }
+        }
+
+        private void OnDialogueSet()
+        {
+            SetCrossHairState(false);
         }
 
         #region Delegate
@@ -66,12 +103,10 @@ namespace GameJamCat
                 case State.Play:
                     break;
                 case State.Dialogue:
+                    OnDialogueSet();
                     break;
                 case State.EndGame:
-                    if (_endgameViewBehaviour != null)
-                    {
-                        _endgameViewBehaviour.DisplayEndPanel(true); //placeholder boolean
-                    }
+                    OnEndGameSet();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(state), state, null);
@@ -82,6 +117,11 @@ namespace GameJamCat
         {
             _stateManager.SetState(State.Play);
         }
-        #endregion
+        
+        private void HandleOnDossierStateChange(bool isOpen)
+        {
+            SetCrossHairState(!isOpen);
+        }
+        #endregion 
     }
 }

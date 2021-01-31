@@ -10,7 +10,6 @@ namespace GameJamCat
     public class DossierMenuView : MonoBehaviour
     {
         private const string DossierText = "likes {0}";
-        private const float AnimationDossierDistance = 970;
         private const float AnimationDuration = 0.5f;
 
         [Title("Poster Cat Image")]
@@ -24,6 +23,8 @@ namespace GameJamCat
         [SerializeField] private Image _catActivitiesImage = null;
         [SerializeField] private TMP_Text _cativities = null;
 
+        private float _animationDossierDistance = 0;
+        
         //Tentative Use Case from UI Manager
         public void Initialize(string catName, string likes, string cativities, Texture2D catimage = null)
         {
@@ -34,15 +35,15 @@ namespace GameJamCat
             
             var rectTransform = GetComponent<RectTransform>();
             // Top
-            rectTransform.offsetMax = new Vector2(rectTransform.offsetMax.x, -AnimationDossierDistance);
+            rectTransform.offsetMax = new Vector2(rectTransform.offsetMax.x, -_animationDossierDistance);
             // Bottom
-            rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, -AnimationDossierDistance);
+            rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, -_animationDossierDistance);
         }
 
         public void SetDossierOpen(bool isCurrentlyOpen)
         {
             var moveDirection = isCurrentlyOpen ? Vector3.up : Vector3.down;
-            transform.DOBlendableLocalMoveBy(moveDirection * AnimationDossierDistance, AnimationDuration, true);
+            transform.DOBlendableLocalMoveBy(moveDirection * _animationDossierDistance, AnimationDuration, true);
         }
 
         private void SetName(string catName)
@@ -67,6 +68,11 @@ namespace GameJamCat
             {
                 element.texture = image;
             }
+        }
+
+        private void Awake()
+        {
+            _animationDossierDistance = Screen.height * 0.9f;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace GameJamCat
         private PlayableDirector playableDirector;
         private CinemachineVirtualCamera playerVirtualCamera;
 
-        public Renderer CatRenderer => _catRenderer;
+        public Renderer CatRenderer { get; private set; }
 
         /// <summary>
         /// Called by the CatManager when a cat is grabbed from the pool
@@ -25,9 +25,19 @@ namespace GameJamCat
             gameObject.SetActive(true);
         }
 
-        private void Start()
+        /// <summary>
+        /// Called by the CatManager when a cat is grabbed from the pool
+        /// </summary>
+        public void Initialize(Vector3 spawnPosition, Vector3 scale)
         {
-            
+            transform.position = spawnPosition;
+            transform.localScale = scale;
+            gameObject.SetActive(true);
+        }
+
+        private void Awake()
+        {
+            CatRenderer = GetComponentInChildren<Renderer>();
         }
 
         private void Update()
@@ -36,7 +46,7 @@ namespace GameJamCat
         }
 
         /// <summary>
-        /// Fetches main cam to get cinemachine brain and player cam so we can transition from player cam to cat cam 
+        /// Fetches main cam to get cinemachine brain and player cam so we can transition from player cam to cat cam
         /// </summary>
         private void SetupVirtualCams()
         {
@@ -61,7 +71,7 @@ namespace GameJamCat
         }
 
         /// <summary>
-        /// Begins player Conversation With Cat 
+        /// Begins player Conversation With Cat
         /// </summary>
         public void BeginConversation()
         {
