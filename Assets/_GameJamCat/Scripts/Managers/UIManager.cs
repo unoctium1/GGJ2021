@@ -10,6 +10,7 @@ namespace GameJamCat
         [SerializeField] private DossierViewBehaviour _dossierView = null;
         [SerializeField] private ScreenTransitionViewBehaviour _transitionViewBehaviour = null;
         [SerializeField] private EndGameMenu _endgameViewBehaviour = null;
+        [SerializeField] private TimerUI _timer = null;
         [SerializeField] private GameObject _crossHair = null;
         [SerializeField] private LivesViewBehaviour _livesView = null;
         
@@ -41,7 +42,20 @@ namespace GameJamCat
                 _crossHair.gameObject.SetActive(false);
             }
 
+            if (_timer != null)
+            {
+                _timer.Initialize();
+            }
+
             SetLives(lives);
+        }
+
+        public void UpdateTimer(float time)
+        {
+            if (_timer != null)
+            {
+                _timer.UpdateTime(time);
+            }
         }
 
         /// <summary>

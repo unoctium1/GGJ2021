@@ -14,8 +14,9 @@ namespace GameJamCat
         [Title("Managers")] 
         [SerializeField] private PlayerController _playerController = null;
         [SerializeField] private CatManager _catManager = null;
-        [SerializeField] private TimeManager _timeManager = null;
         [SerializeField] private UIManager _uiManager = null;
+        
+        private float _currentTime = 120f;
 
         public int Lives
         {
@@ -39,16 +40,37 @@ namespace GameJamCat
             {
                 _uiManager.Initialize(Lives);
             }
-
-            if (_timeManager != null)
-            {
-                _timeManager.Initialize();
-            }
         }
 
         private void Start()
         {
             _stateManager.SetState(State.Pregame);
+        }
+
+        private void Update()
+        {
+            State currentState = _stateManager.GetState();
+            if (currentState != State.Dialogue && currentState != State.Play)
+            {
+                return;
+            }
+
+            if (HasTimeRunOut())
+            {
+                _stateManager.SetState(State.EndGame);
+                return;
+            }
+
+            _currentTime -= Time.deltaTime;
+            if (_uiManager != null)
+            {
+                _uiManager.UpdateTimer(_currentTime);
+            }
+        }
+
+        private bool HasTimeRunOut()
+        {
+            return _currentTime <= 0;
         }
 
         private void OnDisable()
@@ -62,11 +84,6 @@ namespace GameJamCat
             if (_uiManager != null)
             {
                 _uiManager.CleanUp();
-            }
-
-            if (_timeManager != null)
-            {
-                _timeManager.CleanUp();
             }
         }
 
