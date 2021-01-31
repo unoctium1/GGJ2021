@@ -20,8 +20,9 @@ namespace GameJamCat {
         private Camera _mainCamera;
         private CatBehaviour _currentCatInFocus = null;
         private const float _maxReticleDistance = 8f;
-
+        private const string CatConstant = "Cat";
         private bool _cameraAnimationInProgress = false;
+        private Vector3 _viewportCenter = new Vector3(0.5f, 0.5f, 0);
 
         protected void Awake()
         {
@@ -83,11 +84,12 @@ namespace GameJamCat {
 
         private void FocusObjectUpdate()
         {
-            Ray ray = _mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+            
+            Ray ray = _mainCamera.ViewportPointToRay(_viewportCenter);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, _maxReticleDistance))
             {
-                if (hit.collider.gameObject.CompareTag("Cat"))
+                if (hit.collider.gameObject.CompareTag(CatConstant))
                 {
                     // Fire other event here that could highlite the cross hair 
                     // Thas UX babey 

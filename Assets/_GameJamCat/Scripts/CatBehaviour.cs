@@ -8,6 +8,8 @@ namespace GameJamCat
 {
     public class CatBehaviour : MonoBehaviour
     {
+        private const string DialogueConstant = "Dialogue";
+        private const string PlayerConstant = "Player";
         [SerializeField] private Renderer _catRenderer;
         private PlayableDirector _playableDirector;
         private CinemachineVirtualCamera _playerVirtualCamera;
@@ -51,7 +53,7 @@ namespace GameJamCat
         {
             foreach (var output in _playableDirector.playableAsset.outputs)
             {
-                if (output.streamName == "Dialouge")
+                if (output.streamName == DialogueConstant)
                 {
                     CinemachineBrain cinemachine = Camera.main.GetComponent<CinemachineBrain>();
                     CinemachineVirtualCamera playerVirtualCamera = cinemachine.transform.parent.GetComponentInChildren<CinemachineVirtualCamera>();
@@ -59,7 +61,7 @@ namespace GameJamCat
                     var cinemachineTrack = output.sourceObject as CinemachineTrack;
                     foreach (var clip in cinemachineTrack.GetClips())
                     {
-                        if (clip.displayName == "Player")
+                        if (clip.displayName == PlayerConstant)
                         {
                             var cinemachineShot = clip.asset as CinemachineShot;
                             _playableDirector.SetReferenceValue(cinemachineShot.VirtualCamera.exposedName, playerVirtualCamera);
