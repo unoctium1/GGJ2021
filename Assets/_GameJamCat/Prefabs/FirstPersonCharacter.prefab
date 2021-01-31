@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1951114727547282147}
   - component: {fileID: 1951114727547282158}
   - component: {fileID: 3828263305584225556}
+  - component: {fileID: 3625384278841305036}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -151,6 +152,51 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &3625384278841305036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951114727547282144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: 5c12fc3edc53a704a93ddfacd17b5d07, type: 2}
+    - {fileID: 11400000, guid: daa26c1d1f6069446b9fe420249e1199, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4847718943461410656}
+          m_TargetAssemblyTypeName: GameJamCat.PlayerController, Assembly-CSharp
+          m_MethodName: PauseTimelineForCat
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4847718943461410656}
+          m_TargetAssemblyTypeName: GameJamCat.PlayerController, Assembly-CSharp
+          m_MethodName: CameraAnimationEnded
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &4818430687386322151
 GameObject:
   m_ObjectHideFlags: 0
@@ -526,3 +572,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 4818430687007944142}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4847718943461410656 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114858968655866542, guid: 5b751e2c3ed3eb640abb2fb185a2221a,
+    type: 3}
+  m_PrefabInstance: {fileID: 4818430687007944142}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53614e45f4c01b9498f2223ed50cb04d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
