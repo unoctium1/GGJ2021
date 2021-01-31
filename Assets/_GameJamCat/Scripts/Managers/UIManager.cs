@@ -76,19 +76,27 @@ namespace GameJamCat
             {
                 _livesView.SetLiveImage(lives);
             }
+        }       
+        
+        public void SetCrossHairState(bool state)
+        {
+            if (_crossHair != null)
+            {
+                _crossHair.SetActive(state);
+            }
         }
 
         public void SetUpDossier(CatBehaviour targetCat)
         {
-            //TODO
             _dossierView.SetTargetCat(targetCat.CatDialogue);
         }
 
         private void OnDestroy()
         {
             CleanUp();
-        }
-
+        }        
+        
+        #region StateChanges
         private void OnPregameSet()
         {
             if (_transitionViewBehaviour != null) 
@@ -97,7 +105,32 @@ namespace GameJamCat
             }
 
             SetCrossHairState(false);
-        }        
+        }
+
+        private void OnPlaySet()
+        {
+            if (_dossierView != null)
+            {
+                _dossierView.SetInstructionLabel(true);
+                _dossierView.SetPressToOpenCloseText();
+            }
+        }
+        
+        private void OnDialogueSet()
+        {
+            if (_dossierView != null)
+            {
+                if (_dossierView.IsDossierOpen)
+                {
+                    _dossierView.IsDossierOpen = false;
+                    _dossierView.UpdateDossierView();
+                    SetCrossHairState(false);
+                }
+            
+                _dossierView.SetInstructionLabel(false);
+                _dossierView.SetPressToOpenCloseText();
+            } 
+        }
         
         private void OnEndGameSet()
         {
@@ -108,20 +141,8 @@ namespace GameJamCat
                 _endgameViewBehaviour.DisplayEndPanel(true); //placeholder boolean
             }
         }
-
-        private void SetCrossHairState(bool state)
-        {
-            if (_crossHair != null)
-            {
-                _crossHair.SetActive(state);
-            }
-        }
-
-        private void OnDialogueSet()
-        {
-            SetCrossHairState(false);
-        }
-
+        #endregion
+        
         #region Delegate
 
         private void HandleOnStateChange(State state)
@@ -132,7 +153,7 @@ namespace GameJamCat
                     OnPregameSet();
                     break;
                 case State.Play:
-                    SetCrossHairState(true);
+                    OnPlaySet();
                     break;
                 case State.Dialogue:
                     OnDialogueSet();

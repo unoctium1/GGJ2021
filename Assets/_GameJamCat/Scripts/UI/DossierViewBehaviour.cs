@@ -36,7 +36,10 @@ namespace GameJamCat
 
         public void SetTargetCat(CatCustomisation catCustomisation)
         {
-            _dossierMenuView?.SetNewCat(catCustomisation);
+            if (_dossierMenuView != null)
+            {
+                _dossierMenuView.SetNewCat(catCustomisation);
+            }
         }
 
         public void Initialize()
@@ -49,6 +52,35 @@ namespace GameJamCat
 
             SetPressToOpenCloseText();
         }
+        
+        public void SetPressToOpenCloseText()
+        {
+            var openOrClose = IsDossierOpen ? CloseLabel : OpenLabel;
+            if (_pressToOpenClose != null)
+            {
+                _pressToOpenClose.text = string.Format(InstructionalLabel, _dossierButton.ToString(), openOrClose);
+            }
+        }
+
+        public void UpdateDossierView()
+        {
+            if (_dossierMenuView != null)
+            {
+                _dossierMenuView.SetDossierOpen(IsDossierOpen);
+            }
+        }
+
+        /// <summary>
+        /// Set Instruction Label
+        /// </summary>
+        /// <param name="turnOn">turn on off label</param>
+        public void SetInstructionLabel(bool turnOn)
+        {
+            if (_pressToOpenClose != null)
+            {
+                _pressToOpenClose.gameObject.SetActive(turnOn);
+            }
+        }
 
         public void CleanUp()
         {
@@ -57,26 +89,15 @@ namespace GameJamCat
         
         private void Update()
         {
-            if (Input.GetKeyDown(_dossierButton))
+            if (Input.GetKeyDown(_dossierButton) && StateManager.Instance.GetState() != State.Dialogue)
             {
                 IsDossierOpen = !IsDossierOpen;
-                if (_dossierMenuView != null)
-                {
-                    _dossierMenuView.SetDossierOpen(_isDossierOpen);
-                }
-
+                UpdateDossierView();
                 SetPressToOpenCloseText();
             }
         }
 
-        private void SetPressToOpenCloseText()
-        {
-            var openOrClose = IsDossierOpen ? CloseLabel : OpenLabel;
-            if (_pressToOpenClose != null)
-            {
-                _pressToOpenClose.text = string.Format(InstructionalLabel, _dossierButton.ToString(), openOrClose);
-            }
-        }
+
 
     }
 }

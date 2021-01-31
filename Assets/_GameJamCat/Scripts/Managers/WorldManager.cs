@@ -40,6 +40,11 @@ namespace GameJamCat
             {
                 _uiManager.Initialize(Lives);
             }
+
+            if (_playerController != null)
+            {
+                _playerController.OnEndConversation += HandleOnEndConversation;
+            }
         }
 
         private void Start()
@@ -91,6 +96,11 @@ namespace GameJamCat
         private void HandleOnGeneratedSelectedCatToFind(CatBehaviour cat)
         {
             _uiManager.SetUpDossier(cat);
+        }
+
+        private void HandleOnEndConversation()
+        {
+            _uiManager.SetCrossHairState(true);
         }
         #endregion
     }

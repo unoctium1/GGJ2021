@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Gameplay;
 
@@ -8,27 +9,29 @@ namespace GameJamCat {
     [RequireComponent(typeof(CharacterController))]
     public class PlayerController : MonoBehaviour
     {
-        [SerializeField]
-        private bool _activateControllerDebug = false;
-
-        private readonly IStateManager _stateManager = StateManager.Instance;
-        
-        public CharacterController characterController { get; private set; }
-        public PlayerCharacter playerCharacter { get; private set; }
-
-        public FirstPersonCamera playerCamera;
-        private Camera _mainCamera;
-        private CatBehaviour _currentCatInFocus = null;
         private const float _maxReticleDistance = 8f;
         private const string CatConstant = "Cat";
+        
+        private readonly IStateManager _stateManager = StateManager.Instance;
+
+        [SerializeField]
+        private bool _activateControllerDebug = false;
+        public FirstPersonCamera playerCamera;
+        private Camera _mainCamera = null;
+        private CatBehaviour _currentCatInFocus = null;
         private bool _cameraAnimationInProgress = false;
         private Vector3 _viewportCenter = new Vector3(0.5f, 0.5f, 0);
 
+        public event Action OnEndConversation;
+        
+        private CharacterController characterController { get; set; }
+        private PlayerCharacter playerCharacter { get; set; }
+        
         protected void Awake()
         {
             characterController = GetComponent<CharacterController>();
             playerCharacter = GetComponent<PlayerCharacter>();
-            _mainCamera = this.transform.parent.GetComponentInChildren<Camera>();
+            _mainCamera = transform.parent.GetComponentInChildren<Camera>();
         }
 
         protected void Update()
@@ -39,9 +42,17 @@ namespace GameJamCat {
             {
                 if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
-                    if (_currentCatInFocus == null) return;
+                    if (_currentCatInFocus == null)
+                    {
+                        return;
+                    }
                     _currentCatInFocus.EndConversation();
                     _stateManager.SetState(State.Play);
+
+                    if (OnEndConversation != null)
+                    {
+                        OnEndConversation();
+                    }
                 }
             }
 
@@ -89,13 +100,13 @@ namespace GameJamCat {
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, _maxReticleDistance))
             {
-                if (hit.collider.gameObject.CompareTag(CatConstant))
+                if (hit.collider.CompareTag(CatConstant))
                 {
                     // Fire other event here that could highlite the cross hair 
                     // Thas UX babey 
                     if (Input.GetKeyDown(KeyCode.Mouse1))
                     {
-                        _currentCatInFocus = hit.collider.gameObject.GetComponent<CatBehaviour>();
+                        _currentCatInFocus = hit.collider.GetComponent<CatBehaviour>();
                         _currentCatInFocus.BeginConversation();
                         _cameraAnimationInProgress = true;
                     }
