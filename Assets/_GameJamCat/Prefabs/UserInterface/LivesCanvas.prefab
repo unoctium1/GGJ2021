@@ -191,3 +191,4 @@ MonoBehaviour:
   _twoLivesLeft: {fileID: 21300000, guid: edff48038cbbf634bb0e22e1e1a6ed03, type: 3}
   _oneLifeLeft: {fileID: 21300000, guid: ed602de57ec697f498bbc4d5161ded30, type: 3}
   _noLivesLeft: {fileID: 21300000, guid: 45c67ff5aabb34e44a538aa6e7a7b464, type: 3}
+  _liveImage: {fileID: 842194866592236843}
