@@ -11,7 +11,7 @@ namespace GameJamCat
         
         [Title("Managers")]
         [SerializeField] private CatFactory _catGenerator = null;
-        [SerializeField] private SpawnArea _spawnArea = null;
+        [SerializeField] private SpawnArea[] _spawnArea = null;
 
         [Title("Properties")] 
         [SerializeField] private int _catsToSpawn = 1;
@@ -64,7 +64,8 @@ namespace GameJamCat
         private CatBehaviour GetRandomCat()
         {
             CatBehaviour cat = _catGenerator.GetRandomCat();
-            var position = _spawnArea.GetRandomUnitWithSphere();
+            var spawnArea = Utilities.GetRandom(_spawnArea);
+            var position = spawnArea.GetRandomUnitWithSphere();
             var scale = Utilities.GetRandom(_catScaleRange);
             cat.Initialize(position, new Vector3(scale, scale, scale));
             _activeCats.Add(cat);
