@@ -19,7 +19,7 @@ namespace GameJamCat {
         public FirstPersonCamera playerCamera;
         private Camera _mainCamera;
         private CatBehaviour _currentCatInFocus = null;
-        private const float _maxReticleDistance = 5f;
+        private const float _maxReticleDistance = 8f;
 
         private bool _cameraAnimationInProgress = false;
 
