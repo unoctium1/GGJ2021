@@ -23,6 +23,7 @@ namespace GameJamCat
         [SerializeField] private TimerUI _timer = null;
         [SerializeField] private GameObject _crossHair = null;
         [SerializeField] private LivesViewBehaviour _livesView = null;
+        [SerializeField] private GameObject _crossHairText = null;
         
         /// <summary>
         /// Initialize UIManager, setup values here
@@ -62,7 +63,7 @@ namespace GameJamCat
             {
                 _timer.Initialize();
             }
-
+            _crossHairText.SetActive(false);
             SetLives(lives);
         }
 
@@ -119,6 +120,12 @@ namespace GameJamCat
                 _dossierView.SetCatImage(catTex);
             }
         }
+
+        public void SetCrossHairTextState(bool state)
+        {
+            _crossHairText.SetActive(state);
+        }
+        
 
         private void OnDestroy()
         {

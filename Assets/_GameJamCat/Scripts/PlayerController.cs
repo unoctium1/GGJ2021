@@ -20,10 +20,14 @@ namespace GameJamCat {
         private Camera _mainCamera = null;
         private CatBehaviour _currentCatInFocus = null;
         private bool _cameraAnimationInProgress = false;
+        private bool _lookingAtCat = false;
         private Vector3 _viewportCenter = new Vector3(0.5f, 0.5f, 0);
 
         public event Action OnEndConversation;
-        
+        public event Action LookingAtCat;
+        public event Action NotLookingAtCat;
+
+
         private CharacterController characterController { get; set; }
         private PlayerCharacter playerCharacter { get; set; }
         
@@ -71,6 +75,13 @@ namespace GameJamCat {
                 playerCharacter.Simulate(characterController, input);
             if (_cameraAnimationInProgress == false)
                 FocusObjectUpdate();
+            if (_lookingAtCat == true && _currentCatInFocus != null)
+            {
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    _currentCatInFocus.ActivatePet();
+                }
+            }
         }
 
         protected void LateUpdate()
@@ -102,14 +113,29 @@ namespace GameJamCat {
             {
                 if (hit.collider.CompareTag(CatConstant))
                 {
+                    if (_lookingAtCat == false)
+                    {
+                        LookingAtCat();
+                        _lookingAtCat = true;
+                        _currentCatInFocus = hit.collider.GetComponent<CatBehaviour>();
+                    }
                     // Fire other event here that could highlite the cross hair 
                     // Thas UX babey 
                     if (Input.GetKeyDown(KeyCode.Mouse1))
                     {
-                        _currentCatInFocus = hit.collider.GetComponent<CatBehaviour>();
-                        _currentCatInFocus.BeginConversation();
-                        _cameraAnimationInProgress = true;
+                        if (_currentCatInFocus != null)
+                        {
+                            _currentCatInFocus.BeginConversation();
+                            _cameraAnimationInProgress = true;
+                        }
+                       
                     }
+                }
+                else
+                {
+                    NotLookingAtCat();
+                    _lookingAtCat = false;
+                    _currentCatInFocus = null;
                 }
             }
         }

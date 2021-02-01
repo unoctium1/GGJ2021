@@ -1,4 +1,5 @@
 using Cinemachine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -75,6 +76,11 @@ namespace GameJamCat
                     }
                 }
             }
+        }
+
+        public void ActivatePet()
+        {
+            Debug.Log("Pet pet pet ");
         }
 
         /// <summary>
