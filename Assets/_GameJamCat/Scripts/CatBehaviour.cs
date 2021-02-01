@@ -1,4 +1,5 @@
 using Cinemachine;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Playables;
 using Random = UnityEngine.Random;
@@ -8,14 +9,16 @@ namespace GameJamCat
 {
     public class CatBehaviour : MonoBehaviour
     {
+
         [SerializeField]
         private CatCustomisation _catDialogue;
         private const string DialogueConstant = "Dialogue";
         private const string PlayerConstant = "Player";
         private PlayableDirector _playableDirector;
+        private ParticleSystem _particles;
         private CinemachineVirtualCamera _playerVirtualCamera;
-        [SerializeField] Transform[] _renderTextureCamLocations;
-
+        [SerializeField] private Transform[] _renderTextureCamLocations;
+        [SerializeField] private float _petDuration = 0.5f;
         [SerializeField] private AudioSource _source;
 
         public Renderer CatRenderer { get; private set; }
@@ -47,7 +50,7 @@ namespace GameJamCat
         {
             CatRenderer = GetComponentInChildren<Renderer>();
             _playableDirector = GetComponent<PlayableDirector>();
-
+            _particles = GetComponentInChildren<ParticleSystem>();
             if (_source != null)
             {
                 _source.pitch = Random.Range(-3f, 3f);
@@ -87,7 +90,14 @@ namespace GameJamCat
 
         public void ActivatePet()
         {
-            Debug.Log("Pet pet pet ");
+            StartCoroutine(StartParticles());
+        }
+
+        private IEnumerator StartParticles()
+        {
+            _particles.Play();
+            yield return new WaitForSeconds(_petDuration);
+            _particles.Stop();
         }
 
         /// <summary>
