@@ -16,7 +16,7 @@ namespace GameJamCat
         [SerializeField] private CatManager _catManager = null;
         [SerializeField] private UIManager _uiManager = null;
         
-        private float _currentTime = 120f;
+        private float _currentTime = 300f;
 
         public int Lives
         {

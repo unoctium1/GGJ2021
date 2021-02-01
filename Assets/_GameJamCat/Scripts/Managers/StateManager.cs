@@ -36,7 +36,7 @@ namespace GameJamCat
         {
         }
 
-        protected StateManager()
+        private StateManager()
         {
         }
 
