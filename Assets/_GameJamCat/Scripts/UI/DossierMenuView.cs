@@ -19,7 +19,7 @@ namespace GameJamCat
         [SerializeField] private RawImage _catImage = null;
         [Title("Name")]
         [SerializeField] private TMP_Text _catName = null;
-        [Title("Likes")] 
+        [Title("Likes")]
         [SerializeField] private Image _catLikesImage = null;
         [SerializeField] private TMP_Text _catLikes = null;
         [Title("Cativities")]
@@ -32,7 +32,7 @@ namespace GameJamCat
         [SerializeField] Sprite _yarnBallsIcon, _cardboardBoxIcon, _fishingRodIcon, _catnipSackIcon, _hijinksIcon, _scratchingPostIcon, _laserIcon, _tennisBall = null;
 
         private float _animationDossierDistance = 0;
-        
+
         //Tentative Use Case from UI Manager
         public void SetNewCat(CatCustomisation catDescription, Texture2D catimage = null)
         {
@@ -104,7 +104,7 @@ namespace GameJamCat
             _animationDossierDistance = Screen.height * 0.9f;
         }
 
-        public (Sprite,string) GetFoodSprite(Food food)
+        public (Sprite, string) GetFoodSprite(Food food)
         {
             return food switch
             {
@@ -113,11 +113,11 @@ namespace GameJamCat
                 Food.Chicken => (_chickenIcon, "CHICKEN"),
                 Food.Pumpkin => (_pumpkinIcon, "PUMPKIN"),
                 Food.DryKibble => (_dryKibbleIcon, "DRY KIBBLE"),
-                Food.WetKibble => (_wetKibbleIcon,"WET KIBBLE"),
-                Food.Kibble => (_kibbleIcon,"KIBBLE"),
-                Food.Bones => (_boneIcon,"BONE"),
-                Food.Beef => (_beefIcon,"BEEF"),
-                _ => (null,null)
+                Food.WetKibble => (_wetKibbleIcon, "WET KIBBLE"),
+                Food.Kibble => (_kibbleIcon, "KIBBLE"),
+                Food.Bones => (_boneIcon, "BONE"),
+                Food.Beef => (_beefIcon, "BEEF"),
+                _ => (null, null)
             };
         }
 
@@ -125,7 +125,7 @@ namespace GameJamCat
         {
             return toy switch
             {
-                Toy.YarnBalls => (_yarnBallsIcon,"YARN"),
+                Toy.YarnBalls => (_yarnBallsIcon, "YARN"),
                 Toy.Hijinks => (_hijinksIcon, "HIJINKS"),
                 Toy.CardboardBox => (_cardboardBoxIcon, "A BOX"),
                 Toy.FishingRod => (_fishingRodIcon, "FISHING"),

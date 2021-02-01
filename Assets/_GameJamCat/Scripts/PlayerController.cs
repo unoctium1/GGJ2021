@@ -26,6 +26,7 @@ namespace GameJamCat {
         public event Action OnEndConversation;
         public event Action LookingAtCat;
         public event Action NotLookingAtCat;
+        public event Action<CatBehaviour> OnTalkToCat;
 
 
         private CharacterController characterController { get; set; }
@@ -125,6 +126,7 @@ namespace GameJamCat {
                     {
                         if (_currentCatInFocus != null)
                         {
+                            OnTalkToCat(_currentCatInFocus);
                             _currentCatInFocus.BeginConversation();
                             _cameraAnimationInProgress = true;
                         }

@@ -47,6 +47,7 @@ namespace GameJamCat
                 _playerController.OnEndConversation += HandleOnEndConversation;
                 _playerController.LookingAtCat += HandleShowCrossHairText;
                 _playerController.NotLookingAtCat += HandleHideCrossHairText;
+                _playerController.OnTalkToCat += HandleOnTalkToCat;
             }
         }
 
@@ -97,6 +98,11 @@ namespace GameJamCat
         }
 
         #region delegate
+        private void HandleOnTalkToCat(CatBehaviour cat)
+        {
+            _uiManager.SetTalkingToCat(cat);
+        }
+
         private void HandleOnGeneratedSelectedCatToFind(CatBehaviour cat)
         {
             _uiManager.SetUpDossier(cat);
