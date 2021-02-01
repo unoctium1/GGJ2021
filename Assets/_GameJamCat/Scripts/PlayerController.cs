@@ -32,6 +32,8 @@ namespace GameJamCat {
         [SerializeField]
         private GameObject _actionBox = null;
         [SerializeField]
+        private GameObject _dialogueOptions = null;
+        [SerializeField]
         private GameObject _dialogueBox = null;
 
         private DialogueBoxBehaviour _dialogueBoxBehaviour = null;
@@ -45,6 +47,13 @@ namespace GameJamCat {
             playerCharacter = GetComponent<PlayerCharacter>();
             _mainCamera = transform.parent.GetComponentInChildren<Camera>();
             _dialogueBoxBehaviour = _dialogueBox.GetComponentInChildren<DialogueBoxBehaviour>();
+            _dialogueBoxBehaviour.OnReadCompleted += ShrinkDialogueAndReturnToOptions;
+        }
+
+        private void ShrinkDialogueAndReturnToOptions()
+        {
+            _dialogueBoxBehaviour.Hide();
+            _dialogueOptions.SetActive(true);
         }
 
         protected void Update()
@@ -53,17 +62,19 @@ namespace GameJamCat {
             // end conversation should be called from a UI button once we have the text options
             if (_stateManager.GetState() == State.Dialogue && _cameraAnimationInProgress == true)
             {
-                if (Input.GetKeyDown(KeyCode.Escape))
+                if (Input.GetKeyDown(KeyCode.R))
                 {
                     if (_currentCatInFocus == null)
                     {
                         return;
                     }
-                    _dialogueBox.SetActive(false);
+                    _dialogueBoxBehaviour.Hide();
+                    _dialogueOptions.SetActive(false);
                     _actionBox.SetActive(false);
 
                     _currentCatInFocus.EndConversation();
                     _stateManager.SetState(State.Play);
+                    Cursor.lockState = CursorLockMode.Locked;
 
                     if (OnEndConversation != null)
                     {
@@ -94,6 +105,11 @@ namespace GameJamCat {
                     _currentCatInFocus.ActivatePet();
                 }
             }
+        }
+
+        private void OnDisable()
+        {
+            _dialogueBoxBehaviour.OnReadCompleted -= ShrinkDialogueAndReturnToOptions;
         }
 
         protected void LateUpdate()
@@ -137,6 +153,7 @@ namespace GameJamCat {
                     {
                         if (_currentCatInFocus != null)
                         {
+                            Cursor.lockState = CursorLockMode.Confined;
                             OnTalkToCat(_currentCatInFocus);
                             _currentCatInFocus.BeginConversation();
                             _cameraAnimationInProgress = true;
@@ -165,8 +182,6 @@ namespace GameJamCat {
 
         private void ActivateActionBox()
         {
-
-            Cursor.lockState = CursorLockMode.Confined;
             _actionBox.SetActive(true);
         }
 
@@ -190,15 +205,28 @@ namespace GameJamCat {
         {
             if (_currentCatInFocus != null)
             {
-                _dialogueBoxBehaviour.ReadText(_currentCatInFocus.CatDialogue._catFoodAnswer);
+                if (_currentCatInFocus.CatDialogue._catFoodAnswer != null)
+                {
+                    _dialogueBoxBehaviour.Show();
+                    _dialogueBoxBehaviour.ReadText(_currentCatInFocus.CatDialogue._catFoodAnswer);
+                }
             }
+        }
+
+        private void DisableOptionsBox()
+        {
+            _dialogueOptions.SetActive(false);
         }
 
         public void CatNameDialogue()
         {
             if (_currentCatInFocus != null)
             {
-                _dialogueBoxBehaviour.ReadText(_currentCatInFocus.CatDialogue._catNameAnswer);
+                if (_currentCatInFocus.CatDialogue._catNameAnswer != null)
+                {
+                    _dialogueBoxBehaviour.Show();
+                    _dialogueBoxBehaviour.ReadText(_currentCatInFocus.CatDialogue._catNameAnswer);
+                }
             }
         }
 
@@ -206,7 +234,11 @@ namespace GameJamCat {
         {
             if (_currentCatInFocus != null)
             {
-                _dialogueBoxBehaviour.ReadText(_currentCatInFocus.CatDialogue._catActivityAnswer);
+                if (_currentCatInFocus.CatDialogue._catActivityAnswer != null)
+                {
+                    _dialogueBoxBehaviour.Show();
+                    _dialogueBoxBehaviour.ReadText(_currentCatInFocus.CatDialogue._catActivityAnswer);
+                }
             }
         }
 
@@ -214,7 +246,12 @@ namespace GameJamCat {
         {
             if (_currentCatInFocus != null)
             {
-                //_dialogueBoxBehaviour.SetCatNameInDialogueBox(_currentCatInFocus.CatDialogue._catName);
+                if (_currentCatInFocus.CatDialogue._catName != null)
+                {
+                    SetDialogueBoxName boxname = _dialogueBoxBehaviour.GetComponent<SetDialogueBoxName>();
+                    boxname.SetCatNameInDialogueBox(_currentCatInFocus.CatDialogue._catName);
+                }
+                
             }
         }
 

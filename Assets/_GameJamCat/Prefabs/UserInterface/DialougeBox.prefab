@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 8580527592101679704}
   - component: {fileID: 8580527592101679706}
   - component: {fileID: 8580527592101679705}
+  - component: {fileID: 165163320}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -108,10 +109,10 @@ RectTransform:
   m_Father: {fileID: 8580527592691215546}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -1.157959, y: -180.23}
-  m_SizeDelta: {x: -20.3306, y: 141.54}
+  m_AnchorMin: {x: 0.05, y: 0.4}
+  m_AnchorMax: {x: 1, y: 0.6}
+  m_AnchoredPosition: {x: -28.105, y: -64.8}
+  m_SizeDelta: {x: -56.2101, y: 129.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8580527592101679706
 CanvasRenderer:
@@ -141,7 +142,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: dsadasdasdsa
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d792e2dc276593c4ab7900514d367d26, type: 2}
   m_sharedMaterial: {fileID: 6530025793157268521, guid: d792e2dc276593c4ab7900514d367d26,
@@ -169,8 +170,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -211,6 +212,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &165163320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8580527592101679711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c33ba8e28f699764cbd1fa00acc7fb83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _catNameTextMeshPro: {fileID: 8580527592719141769}
 --- !u!1 &8580527592691215545
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,8 +336,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 57, y: -9}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -6.443207, y: 0.000011444092}
+  m_SizeDelta: {x: 366.0789, y: 97.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8580527592719141770
 CanvasRenderer:
@@ -353,9 +367,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '?????
-
-'
+  m_text: Meow meow meow
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d792e2dc276593c4ab7900514d367d26, type: 2}
   m_sharedMaterial: {fileID: 6530025793157268521, guid: d792e2dc276593c4ab7900514d367d26,
@@ -390,8 +402,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0

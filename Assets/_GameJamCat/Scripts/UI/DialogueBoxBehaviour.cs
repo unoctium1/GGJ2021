@@ -19,8 +19,6 @@ namespace GameJamCat
         protected override void OnEnable()
         {
             base.OnEnable();
-            _dialougeBoxTransform.DOScale(1, 0.5f).SetEase(Ease.OutBack);
-
         }
 
         protected override void OnDisable()
@@ -33,8 +31,17 @@ namespace GameJamCat
         {
             base.Awake();
             _dialougeBoxTransform = transform.parent.GetComponent<RectTransform>();
+            _dialougeBoxTransform.DOScale(0, 0);
+        }
 
-            
+        public void Show()
+        {
+            _dialougeBoxTransform.DOScale(1, 0.5f).SetEase(Ease.OutBack);
+        }
+
+        public void Hide()
+        {
+            _dialougeBoxTransform.DOScale(0, 0.5f).SetEase(Ease.OutBack);
         }
 
         public void ReadText(string newtext)
@@ -92,6 +99,7 @@ namespace GameJamCat
 
                 if (OnReadCompleted != null)
                 {
+                    yield return new WaitForSeconds(1);
                     OnReadCompleted();
                 }
                 

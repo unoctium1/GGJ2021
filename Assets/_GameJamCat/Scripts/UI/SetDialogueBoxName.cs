@@ -8,7 +8,7 @@ namespace GameJamCat
     public class SetDialogueBoxName : MonoBehaviour
     {
         [SerializeField]
-        private TextMeshPro _catNameTextMeshPro;
+        private TextMeshProUGUI _catNameTextMeshPro;
 
         public void SetCatNameInDialogueBox(string catName)
         {
