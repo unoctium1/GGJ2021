@@ -3,6 +3,7 @@ using System.Collections;
 using TMPro;
 using DG.Tweening;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 namespace GameJamCat
 {
@@ -13,9 +14,7 @@ namespace GameJamCat
         private float _speed = 50f;
 
         private RectTransform _dialougeBoxTransform;
-
-        [SerializeField]
-        private TextMeshPro _catNameTextMeshPro;
+        
 
         protected override void OnEnable()
         {
@@ -34,16 +33,8 @@ namespace GameJamCat
         {
             base.Awake();
             _dialougeBoxTransform = transform.parent.GetComponent<RectTransform>();
-        }
 
-        public void SetCatNameInDialogueBox(string catName)
-        {
-            _catNameTextMeshPro.text = catName;
-        }
-
-        public void ResetCatDialogueBox()
-        {
-            _catNameTextMeshPro.text = "?????";
+            
         }
 
         public void ReadText(string newtext)

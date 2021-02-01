@@ -13,6 +13,7 @@ namespace GameJamCat
         [SerializeField] private CatFactory _catGenerator = null;
         [SerializeField] private SpawnArea[] _spawnArea = null;
 
+
         [Title("Properties")] 
         [SerializeField] private int _catsToSpawn = 1;
         [SerializeField, MinMaxSlider(0.5f, 3.0f)]
@@ -98,7 +99,17 @@ namespace GameJamCat
 
         }
 
-
+        internal void ClaimCat(CatBehaviour currentCatInFocus)
+        {
+            if (currentCatInFocus == _chosenCatToFind)
+            {
+                // Claim succesful
+            }
+            else
+            {
+                // Claim not succesful
+            }
+        }
     }
 
     public interface ICatFactory

@@ -178,15 +178,7 @@ namespace GameJamCat
                 _dossierView.SetInstructionLabel(false);
                 _dossierView.SetPressToOpenCloseText();
             }
-
-            if(_actionBoxView !=null)
-            {
-                if(!_actionBoxView.IsActionBoxOpen)
-                {
-                    _actionBoxView.IsActionBoxOpen = true;
-                    _actionBoxView.UpdateActionBoxView();
-                }
-            }
+            
         }
 
         private void OnEndGameSet()

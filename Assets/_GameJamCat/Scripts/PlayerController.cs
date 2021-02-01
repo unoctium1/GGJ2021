@@ -28,6 +28,14 @@ namespace GameJamCat {
         public event Action NotLookingAtCat;
         public event Action<CatBehaviour> OnTalkToCat;
 
+        [SerializeField]
+        private CatManager _catManager = null;
+        [SerializeField]
+        private GameObject _actionBox = null;
+        [SerializeField]
+        private GameObject _dialogueBox = null;
+
+        private DialogueBoxBehaviour _dialogueBoxBehaviour = null;
 
         private CharacterController characterController { get; set; }
         private PlayerCharacter playerCharacter { get; set; }
@@ -37,6 +45,7 @@ namespace GameJamCat {
             characterController = GetComponent<CharacterController>();
             playerCharacter = GetComponent<PlayerCharacter>();
             _mainCamera = transform.parent.GetComponentInChildren<Camera>();
+            _dialogueBoxBehaviour = _dialogueBox.GetComponentInChildren<DialogueBoxBehaviour>();
         }
 
         protected void Update()
@@ -45,12 +54,15 @@ namespace GameJamCat {
             // end conversation should be called from a UI button once we have the text options
             if (_stateManager.GetState() == State.Dialogue && _cameraAnimationInProgress == true)
             {
-                if (Input.GetKeyDown(KeyCode.Mouse0))
+                if (Input.GetKeyDown(KeyCode.Escape))
                 {
                     if (_currentCatInFocus == null)
                     {
                         return;
                     }
+                    _dialogueBox.SetActive(false);
+                    _actionBox.SetActive(false);
+
                     _currentCatInFocus.EndConversation();
                     _stateManager.SetState(State.Play);
 
@@ -149,8 +161,16 @@ namespace GameJamCat {
         {
             _currentCatInFocus.StopTimeline();
             _stateManager.SetState(State.Dialogue);
+            ActivateActionBox();
         }
-        
+
+        private void ActivateActionBox()
+        {
+
+            Cursor.lockState = CursorLockMode.Confined;
+            _actionBox.SetActive(true);
+        }
+
         /// <summary>
         /// Stops spam of the camera 
         /// </summary>
@@ -158,6 +178,47 @@ namespace GameJamCat {
         {
             _cameraAnimationInProgress = false;
         }
+
+        public void ClaimCat()
+        {
+            if (_currentCatInFocus != null)
+            {
+                _catManager.ClaimCat(_currentCatInFocus);
+            }
+        }
+
+        public void FavFoodDialogue()
+        {
+            if (_currentCatInFocus != null)
+            {
+                _dialogueBoxBehaviour.ReadText(_currentCatInFocus.CatDialogue._catFoodAnswer);
+            }
+        }
+
+        public void CatNameDialogue()
+        {
+            if (_currentCatInFocus != null)
+            {
+                _dialogueBoxBehaviour.ReadText(_currentCatInFocus.CatDialogue._catNameAnswer);
+            }
+        }
+
+        public void CatToyDialogue()
+        {
+            if (_currentCatInFocus != null)
+            {
+                _dialogueBoxBehaviour.ReadText(_currentCatInFocus.CatDialogue._catActivityAnswer);
+            }
+        }
+
+        public void SetCatNameInDialogue()
+        {
+            if (_currentCatInFocus != null)
+            {
+                //_dialogueBoxBehaviour.SetCatNameInDialogueBox(_currentCatInFocus.CatDialogue._catName);
+            }
+        }
+
     }
 }
 
