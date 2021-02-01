@@ -99,15 +99,16 @@ namespace GameJamCat
 
         }
 
-        internal void ClaimCat(CatBehaviour currentCatInFocus)
+        public bool ClaimCat(CatBehaviour currentCatInFocus)
         {
             if (currentCatInFocus == _chosenCatToFind)
             {
-                // Claim succesful
+
+                return true;
             }
             else
             {
-                // Claim not succesful
+                return false;
             }
         }
     }

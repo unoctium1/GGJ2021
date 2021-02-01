@@ -48,6 +48,7 @@ namespace GameJamCat
                 _playerController.LookingAtCat += HandleShowCrossHairText;
                 _playerController.NotLookingAtCat += HandleHideCrossHairText;
                 _playerController.OnTalkToCat += HandleOnTalkToCat;
+                _playerController.OnClaimCat += HandleOnClaimCat;
             }
         }
 
@@ -95,9 +96,34 @@ namespace GameJamCat
             {
                 _uiManager.CleanUp();
             }
+            if (_playerController != null)
+            {
+                _playerController.OnEndConversation -= HandleOnEndConversation;
+                _playerController.LookingAtCat -= HandleShowCrossHairText;
+                _playerController.NotLookingAtCat -= HandleHideCrossHairText;
+                _playerController.OnTalkToCat -= HandleOnTalkToCat;
+                _playerController.OnClaimCat -= HandleOnClaimCat;
+            }
         }
 
         #region delegate
+        private void HandleOnClaimCat(CatBehaviour cat)
+        {
+            if (_catManager.ClaimCat(cat))
+            {
+                _uiManager.ClaimedCat = true;
+                StateManager.Instance.SetState(State.EndGame);
+            }
+            else
+            {
+                Lives--;
+                if(StateManager.Instance.GetState() == State.Dialogue)
+                {
+                    StateManager.Instance.SetState(State.Play);
+                }
+            }
+        }
+
         private void HandleOnTalkToCat(CatBehaviour cat)
         {
             _uiManager.SetTalkingToCat(cat);

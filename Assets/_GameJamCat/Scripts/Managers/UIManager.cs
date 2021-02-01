@@ -30,6 +30,8 @@ namespace GameJamCat
 
         [SerializeField] private GameObject _crossHairText = null;
 
+        public bool ClaimedCat { get; set; } = false;
+
         /// <summary>
         /// Initialize UIManager, setup values here
         /// </summary>
@@ -162,17 +164,20 @@ namespace GameJamCat
                 _dossierView.SetInstructionLabel(true);
                 _dossierView.SetPressToOpenCloseText();
             }
+
+          
         }
 
         private void OnDialogueSet()
         {
+            SetCrossHairState(false);
+
             if (_dossierView != null)
             {
                 if (_dossierView.IsDossierOpen)
                 {
                     _dossierView.IsDossierOpen = false;
                     _dossierView.UpdateDossierView();
-                    SetCrossHairState(false);
                 }
 
                 _dossierView.SetInstructionLabel(false);
@@ -187,7 +192,7 @@ namespace GameJamCat
 
             if (_endgameViewBehaviour != null)
             {
-                _endgameViewBehaviour.DisplayEndPanel(true); //placeholder boolean
+                _endgameViewBehaviour.DisplayEndPanel(ClaimedCat); 
             }
         }
         #endregion

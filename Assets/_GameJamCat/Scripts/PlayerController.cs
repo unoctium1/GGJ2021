@@ -27,9 +27,8 @@ namespace GameJamCat {
         public event Action LookingAtCat;
         public event Action NotLookingAtCat;
         public event Action<CatBehaviour> OnTalkToCat;
+        public event Action<CatBehaviour> OnClaimCat;
 
-        [SerializeField]
-        private CatManager _catManager = null;
         [SerializeField]
         private GameObject _actionBox = null;
         [SerializeField]
@@ -183,7 +182,7 @@ namespace GameJamCat {
         {
             if (_currentCatInFocus != null)
             {
-                _catManager.ClaimCat(_currentCatInFocus);
+                OnClaimCat(_currentCatInFocus);
             }
         }
 
