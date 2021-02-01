@@ -18,18 +18,19 @@ namespace GameJamCat
         [System.NonSerialized]
         private List<CatCustomisation> _pool;
 
-        public CatCustomisation GetRandomCat()
+        public bool GetRandomCat(out CatCustomisation cat)
         {
             _pool ??= new List<CatCustomisation>(_catCustomizationOptions);
             if (_pool.Count == 0)
             {
                 // Deal with this properly later
-                return new CatCustomisation();
+                cat = CatCustomisation.EmptyCat();
+                return false;
             }
             int index = Random.Range(0, _pool.Count);
-            var cat = _pool[index];
+            cat = _pool[index];
             _pool.RemoveAt(index);
-            return cat;
+            return true;
         }
 
         public void RecycleCat(CatCustomisation cat)
@@ -50,6 +51,18 @@ namespace GameJamCat
         public Food _food;
         public Toy _toy;
         public string _flavourText;
+
+        public static CatCustomisation EmptyCat() {
+            return new CatCustomisation
+            {
+                _catName = "???",
+                _catNameAnswer = "Meow meow meow, meow meow. Meow.",
+                _catActivityAnswer = "Moew meow. Meow meow MEOW!! Meow meow meow.",
+                _catFoodAnswer = "Meow",
+                _food = Food.none,
+                _toy = Toy.none,
+            };
+        }
     }
 
     public enum Food
@@ -62,7 +75,8 @@ namespace GameJamCat
         WetKibble,
         Kibble, //Use this for both?
         Bones,
-        Beef
+        Beef,
+        none
     } 
 
     public enum Toy
@@ -74,6 +88,7 @@ namespace GameJamCat
         CatnipSack,
         ScratchingPost,
         TennisBall,
-        Laser
+        Laser,
+        none
     }
 }

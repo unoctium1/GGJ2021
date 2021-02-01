@@ -55,7 +55,16 @@ namespace GameJamCat
                 return;
             }
 
-            _chosenCatToFind = Utilities.GetRandom(_activeCats);
+            List<CatBehaviour> validCats = new List<CatBehaviour>();
+            foreach(var cat in _activeCats)
+            {
+                if (cat.IsValidCat)
+                {
+                    validCats.Add(cat);
+                }
+            }
+
+            _chosenCatToFind = Utilities.GetRandom(validCats);
             SetupCamera(_chosenCatToFind);
             if (OnGeneratedSelectedCatToFind != null)
             {

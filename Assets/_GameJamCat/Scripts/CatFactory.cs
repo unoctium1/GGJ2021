@@ -60,7 +60,10 @@ namespace GameJamCat
         {
             var newCat =  _poolObjects ? GetRandomCatPooled() : GetRandomCatUnpooled();
             SetupCatMaterial(newCat.CatRenderer.material);
-            newCat.CatDialogue = _dialogueOptions.GetRandomCat();
+            bool validCat = _dialogueOptions.GetRandomCat(out CatCustomisation catOptions);
+            newCat.CatDialogue = catOptions;
+            newCat.IsValidCat = validCat;
+
             return newCat;
         }
 

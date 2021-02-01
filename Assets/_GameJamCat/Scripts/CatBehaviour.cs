@@ -21,6 +21,8 @@ namespace GameJamCat
         [SerializeField] private float _petDuration = 0.5f;
         [SerializeField] private AudioSource _source;
 
+        public bool IsValidCat { get; set; }
+
         public Renderer CatRenderer { get; private set; }
 
         public CatCustomisation CatDialogue { get => _catDialogue; set => _catDialogue = value; }
