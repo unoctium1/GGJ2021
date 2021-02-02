@@ -9,7 +9,7 @@ namespace GameJamCat
 {
     public class CatBehaviour : MonoBehaviour
     {
-
+        private readonly int ParticleSpriteID = Shader.PropertyToID("_BaseMap");
         [SerializeField]
         private CatCustomisation _catDialogue;
         private const string DialogueConstant = "Dialogue";
@@ -20,6 +20,10 @@ namespace GameJamCat
         [SerializeField] private Transform[] _renderTextureCamLocations;
         [SerializeField] private float _petDuration = 0.5f;
         [SerializeField] private AudioSource _source;
+
+        
+        public Sprite ParticleSprite { get; set; }
+        public Gradient ParticleStartColorRange { get; set; }
 
         public bool IsValidCat { get; set; }
 
@@ -48,59 +52,11 @@ namespace GameJamCat
             gameObject.SetActive(true);
         }
 
-        private void Awake()
-        {
-            CatRenderer = GetComponentInChildren<Renderer>();
-            _playableDirector = GetComponent<PlayableDirector>();
-            _particles = GetComponentInChildren<ParticleSystem>();
-            if (_source != null)
-            {
-                _source.pitch = Random.Range(-3f, 3f);
-                _source.volume = Random.Range(0.5f, 1f);
-            }
-        }
-
-        private void Start()
-        {
-            SetupVirtualCams();
-        }
-
-        /// <summary>
-        /// Fetches main cam to get cinemachine brain and player cam so we can transition from player cam to cat cam
-        /// </summary>
-        private void SetupVirtualCams()
-        {
-            foreach (var output in _playableDirector.playableAsset.outputs)
-            {
-                if (output.streamName == DialogueConstant)
-                {
-                    CinemachineBrain cinemachine = Camera.main.GetComponent<CinemachineBrain>();
-                    CinemachineVirtualCamera playerVirtualCamera = cinemachine.transform.parent.GetComponentInChildren<CinemachineVirtualCamera>();
-                    _playableDirector.SetGenericBinding(output.sourceObject, Camera.main.GetComponent<CinemachineBrain>());
-                    var cinemachineTrack = output.sourceObject as CinemachineTrack;
-                    foreach (var clip in cinemachineTrack.GetClips())
-                    {
-                        if (clip.displayName == PlayerConstant)
-                        {
-                            var cinemachineShot = clip.asset as CinemachineShot;
-                            _playableDirector.SetReferenceValue(cinemachineShot.VirtualCamera.exposedName, playerVirtualCamera);
-                        }
-                    }
-                }
-            }
-        }
-
         public void ActivatePet()
         {
             StartCoroutine(StartParticles());
         }
 
-        private IEnumerator StartParticles()
-        {
-            _particles.Play();
-            yield return new WaitForSeconds(_petDuration);
-            _particles.Stop();
-        }
 
         /// <summary>
         /// Begins player Conversation With Cat
@@ -129,6 +85,66 @@ namespace GameJamCat
         public Transform GetCameraLocation()
         {
             return Utilities.GetRandom(_renderTextureCamLocations);
+        }
+
+        private void Awake()
+        {
+            CatRenderer = GetComponentInChildren<Renderer>();
+            _playableDirector = GetComponent<PlayableDirector>();
+            _particles = GetComponentInChildren<ParticleSystem>();
+            if (_source != null)
+            {
+                _source.pitch = Random.Range(-3f, 3f);
+                _source.volume = Random.Range(0.5f, 1f);
+            }
+        }
+
+        private void Start()
+        {
+            SetupVirtualCams();
+            SetParticle();
+        }
+
+        /// <summary>
+        /// Fetches main cam to get cinemachine brain and player cam so we can transition from player cam to cat cam
+        /// </summary>
+        private void SetupVirtualCams()
+        {
+            foreach (var output in _playableDirector.playableAsset.outputs)
+            {
+                if (output.streamName == DialogueConstant)
+                {
+                    CinemachineBrain cinemachine = Camera.main.GetComponent<CinemachineBrain>();
+                    CinemachineVirtualCamera playerVirtualCamera = cinemachine.transform.parent.GetComponentInChildren<CinemachineVirtualCamera>();
+                    _playableDirector.SetGenericBinding(output.sourceObject, Camera.main.GetComponent<CinemachineBrain>());
+                    var cinemachineTrack = output.sourceObject as CinemachineTrack;
+                    foreach (var clip in cinemachineTrack.GetClips())
+                    {
+                        if (clip.displayName == PlayerConstant)
+                        {
+                            var cinemachineShot = clip.asset as CinemachineShot;
+                            _playableDirector.SetReferenceValue(cinemachineShot.VirtualCamera.exposedName, playerVirtualCamera);
+                        }
+                    }
+                }
+            }
+        }
+
+        private IEnumerator StartParticles()
+        {
+            _particles.Play();
+            yield return new WaitForSeconds(_petDuration);
+            _particles.Stop();
+        }
+
+        private void SetParticle()
+        {
+            if(ParticleSprite != null && ParticleStartColorRange != null && _particles != null){
+                var settings = _particles.main;
+                var renderer = _particles.GetComponent<ParticleSystemRenderer>();
+                renderer.material.SetTexture(ParticleSpriteID, ParticleSprite.texture);
+                settings.startColor = new ParticleSystem.MinMaxGradient(ParticleStartColorRange);
+            }
         }
 
     }
