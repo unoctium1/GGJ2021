@@ -39,6 +39,11 @@ namespace GameJamCat
         [SerializeField, ColorUsage(false, true)]
         private Color[] _eyeColors;
 
+        [SerializeField]
+        private Sprite[] _particleSprites;
+        [SerializeField]
+        private Gradient[] _particleGradients;
+
         [SerializeField, Range(0f, 1f), Tooltip("Percent of cats with textures, relative to solid colors")]
         private float _percentTextured = 0.5f;
         [SerializeField, MinMaxSlider(-10.0f, 10.0f)]
@@ -60,9 +65,12 @@ namespace GameJamCat
         {
             var newCat =  _poolObjects ? GetRandomCatPooled() : GetRandomCatUnpooled();
             SetupCatMaterial(newCat.CatRenderer.material);
+            SetupCatParticles(newCat);
             bool validCat = _dialogueOptions.GetRandomCat(out CatCustomisation catOptions);
             newCat.CatDialogue = catOptions;
             newCat.IsValidCat = validCat;
+
+
 
             return newCat;
         }
@@ -110,6 +118,14 @@ namespace GameJamCat
             m.SetColor(EyeColorID, Utilities.GetRandom(_eyeColors));
             m.SetFloat(NoiseScaleID, Utilities.GetRandom(_noiseScaleRange));
             m.SetFloat(NoiseWeightID, Utilities.GetRandom(_noiseWeightRange));
+        }
+
+        private void SetupCatParticles(CatBehaviour cat)
+        {
+            if (_particleGradients.Length == 0 || _particleSprites.Length == 0) return;
+            int index = Random.Range(0, Mathf.Min(_particleSprites.Length, _particleGradients.Length));
+            cat.ParticleSprite = _particleSprites[index];
+            cat.ParticleStartColorRange = _particleGradients[index];
         }
 
         private CatBehaviour GetRandomCatPooled()
