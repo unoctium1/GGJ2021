@@ -16,7 +16,8 @@ namespace GameJamCat
         #region SHADER_PROPERTY_IDS
         private readonly int FurMapID = Shader.PropertyToID("_BaseMap");
         private readonly int FurColorID = Shader.PropertyToID("_MainColor");
-        private readonly int EyeColorID = Shader.PropertyToID("_EyeColor");
+        private readonly int RightEyeColorID = Shader.PropertyToID("_RightEyeColor");
+        private readonly int LeftEyeColorID = Shader.PropertyToID("_LeftEyeColor");
         private readonly int EarColorID = Shader.PropertyToID("_EarColor");
         private readonly int FeetColorID = Shader.PropertyToID("_FeetColor");
         private readonly int FurOffsetID = Shader.PropertyToID("_FurOffset");
@@ -46,6 +47,8 @@ namespace GameJamCat
 
         [SerializeField, Range(0f, 1f), Tooltip("Percent of cats with textures, relative to solid colors")]
         private float _percentTextured = 0.5f;
+        [SerializeField, Range(0f, 1f), Tooltip("Percent of cats with different colored eyes")]
+        private float _percentDifferentEyes = 0.2f;
         [SerializeField, MinMaxSlider(-10.0f, 10.0f)]
         private Vector2 _textureOffsetRange = new Vector2(-5f, 5f);
         [SerializeField, MinMaxSlider(0.0f, 5.0f)]
@@ -115,7 +118,7 @@ namespace GameJamCat
             }
             m.SetColor(FeetColorID, Utilities.GetRandom(_feetColors));
             m.SetColor(EarColorID, Utilities.GetRandom(_earColors));
-            m.SetColor(EyeColorID, Utilities.GetRandom(_eyeColors));
+            SetCatEyeColor(m);
             m.SetFloat(NoiseScaleID, Utilities.GetRandom(_noiseScaleRange));
             m.SetFloat(NoiseWeightID, Utilities.GetRandom(_noiseWeightRange));
         }
@@ -126,6 +129,25 @@ namespace GameJamCat
             int index = Random.Range(0, Mathf.Min(_particleSprites.Length, _particleGradients.Length));
             cat.ParticleSprite = _particleSprites[index];
             cat.ParticleStartColorRange = _particleGradients[index];
+        }
+
+        private void SetCatEyeColor(Material m)
+        {
+            if(Random.value <= _percentDifferentEyes)
+            {
+                Color leftEyeColor = Utilities.GetRandom(_eyeColors);
+                var tempList = new List<Color>(_eyeColors);
+                tempList.Remove(leftEyeColor);
+                Color rightEyeColor = Utilities.GetRandom(tempList);
+                m.SetColor(LeftEyeColorID, rightEyeColor);
+                m.SetColor(RightEyeColorID, leftEyeColor);
+            }
+            else
+            {
+                Color eyeColor = Utilities.GetRandom(_eyeColors);
+                m.SetColor(LeftEyeColorID, eyeColor);
+                m.SetColor(RightEyeColorID, eyeColor);
+            }
         }
 
         private CatBehaviour GetRandomCatPooled()
