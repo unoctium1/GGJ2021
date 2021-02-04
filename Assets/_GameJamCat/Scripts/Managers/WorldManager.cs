@@ -40,6 +40,7 @@ namespace GameJamCat
             if (_uiManager != null)
             {
                 _uiManager.Initialize(Lives);
+                _uiManager.OnClaimedCat += HandleOnClaimCat;
             }
 
             if (_playerController != null)
@@ -47,8 +48,7 @@ namespace GameJamCat
                 _playerController.OnEndConversation += HandleOnEndConversation;
                 _playerController.LookingAtCat += HandleShowCrossHairText;
                 _playerController.NotLookingAtCat += HandleHideCrossHairText;
-                _playerController.OnTalkToCat += HandleOnTalkToCat;
-                _playerController.OnClaimCat += HandleOnClaimCat;
+                _playerController.OnSelectCat += HandleSelectCat;
             }
         }
 
@@ -95,18 +95,27 @@ namespace GameJamCat
             if (_uiManager != null)
             {
                 _uiManager.CleanUp();
+                _uiManager.OnClaimedCat -= HandleOnClaimCat;
             }
             if (_playerController != null)
             {
                 _playerController.OnEndConversation -= HandleOnEndConversation;
                 _playerController.LookingAtCat -= HandleShowCrossHairText;
                 _playerController.NotLookingAtCat -= HandleHideCrossHairText;
-                _playerController.OnTalkToCat -= HandleOnTalkToCat;
-                _playerController.OnClaimCat -= HandleOnClaimCat;
+                _playerController.OnSelectCat -= HandleSelectCat;
             }
         }
 
         #region delegate
+        private void HandleSelectCat(CatBehaviour cat)
+        {
+            if (_uiManager != null)
+            {
+                _uiManager.SetFocusedCat(cat);
+            }
+            StateManager.Instance.SetState(State.Dialogue);
+        }
+
         private void HandleOnClaimCat(CatBehaviour cat)
         {
             if (_catManager.ClaimCat(cat))
@@ -117,16 +126,14 @@ namespace GameJamCat
             else
             {
                 Lives--;
-                if(StateManager.Instance.GetState() == State.Dialogue)
+                if(Lives > 0 && StateManager.Instance.GetState() == State.Dialogue)
                 {
                     StateManager.Instance.SetState(State.Play);
+                }else if(Lives <= 0)
+                {
+                    StateManager.Instance.SetState(State.EndGame);
                 }
             }
-        }
-
-        private void HandleOnTalkToCat(CatBehaviour cat)
-        {
-            _uiManager.SetTalkingToCat(cat);
         }
 
         private void HandleOnGeneratedSelectedCatToFind(CatBehaviour cat)

@@ -15,7 +15,7 @@ namespace GameJamCat
         
         public event Action OnDialogueCompleted;
         
-        [SerializeField] private DialogueBoxBehaviour _dialogueBoxBehaviour = null;
+        [SerializeField] private DialogueBoxText _dialogueBoxBehaviour = null;
 
         private Transform _dialogueBehaviourContainer = null;
 
