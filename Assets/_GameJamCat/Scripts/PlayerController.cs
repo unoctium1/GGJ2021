@@ -26,17 +26,7 @@ namespace GameJamCat {
         public event Action OnEndConversation;
         public event Action LookingAtCat;
         public event Action NotLookingAtCat;
-        public event Action<CatBehaviour> OnTalkToCat;
-        public event Action<CatBehaviour> OnClaimCat;
-
-        [SerializeField]
-        private GameObject _actionBox = null;
-        [SerializeField]
-        private GameObject _dialogueOptions = null;
-        [SerializeField]
-        private GameObject _dialogueBox = null;
-
-        private DialogueBoxBehaviour _dialogueBoxBehaviour = null;
+        public event Action<CatBehaviour> OnSelectCat;
 
         private CharacterController characterController { get; set; }
         private PlayerCharacter playerCharacter { get; set; }
@@ -46,42 +36,12 @@ namespace GameJamCat {
             characterController = GetComponent<CharacterController>();
             playerCharacter = GetComponent<PlayerCharacter>();
             _mainCamera = transform.parent.GetComponentInChildren<Camera>();
-            _dialogueBoxBehaviour = _dialogueBox.GetComponentInChildren<DialogueBoxBehaviour>();
-            _dialogueBoxBehaviour.OnReadCompleted += ShrinkDialogueAndReturnToOptions;
+            _stateManager.OnStateChanged += HandleStateChange;
         }
 
-        private void ShrinkDialogueAndReturnToOptions()
-        {
-            _dialogueBoxBehaviour.Hide();
-            _dialogueOptions.SetActive(true);
-        }
 
         protected void Update()
         {
-            // THIS IS TEMPORARY: EXITS FROM FOCUS MODE
-            // end conversation should be called from a UI button once we have the text options
-            if (_stateManager.GetState() == State.Dialogue && _cameraAnimationInProgress == true)
-            {
-                if (Input.GetKeyDown(KeyCode.R))
-                {
-                    if (_currentCatInFocus == null)
-                    {
-                        return;
-                    }
-                    _dialogueBoxBehaviour.Hide();
-                    _dialogueOptions.SetActive(false);
-                    _actionBox.SetActive(false);
-
-                    _currentCatInFocus.EndConversation();
-                    _stateManager.SetState(State.Play);
-                    Cursor.lockState = CursorLockMode.Locked;
-
-                    if (OnEndConversation != null)
-                    {
-                        OnEndConversation();
-                    }
-                }
-            }
 
             if (_stateManager.GetState() != State.Play && _activateControllerDebug == false)
             {
@@ -109,7 +69,7 @@ namespace GameJamCat {
 
         private void OnDisable()
         {
-            _dialogueBoxBehaviour.OnReadCompleted -= ShrinkDialogueAndReturnToOptions;
+            _stateManager.OnStateChanged -= HandleStateChange;
         }
 
         protected void LateUpdate()
@@ -151,13 +111,7 @@ namespace GameJamCat {
                     // Thas UX babey 
                     if (Input.GetKeyDown(KeyCode.Mouse1))
                     {
-                        if (_currentCatInFocus != null)
-                        {
-                            Cursor.lockState = CursorLockMode.Confined;
-                            OnTalkToCat(_currentCatInFocus);
-                            _currentCatInFocus.BeginConversation();
-                            _cameraAnimationInProgress = true;
-                        }
+                        SelectCat();
                        
                     }
                 }
@@ -170,19 +124,33 @@ namespace GameJamCat {
             }
         }
 
+        private void ReturnCameraToFocus()
+        {
+            if (_currentCatInFocus == null && !_cameraAnimationInProgress)
+            {
+                return;
+            }
+            _currentCatInFocus.EndConversation();
+
+            if (OnEndConversation != null)
+            {
+                OnEndConversation();
+            }
+        }
+
+        private void UpdateCursor(State state)
+        {
+            bool isInPlayState = state == State.Play;
+            Cursor.lockState = isInPlayState ? CursorLockMode.Locked : CursorLockMode.Confined;
+            Cursor.visible = !isInPlayState;
+        }
+
         /// <summary>
         /// Event calls this from the timeline. Ensures we stay focused on the 'current' cat
         /// </summary>
         public void PauseTimelineForCat()
         {
             _currentCatInFocus.StopTimeline();
-            _stateManager.SetState(State.Dialogue);
-            ActivateActionBox();
-        }
-
-        private void ActivateActionBox()
-        {
-            _actionBox.SetActive(true);
         }
 
         /// <summary>
@@ -193,14 +161,17 @@ namespace GameJamCat {
             _cameraAnimationInProgress = false;
         }
 
-        public void ClaimCat()
+        public void SelectCat()
         {
             if (_currentCatInFocus != null)
             {
-                OnClaimCat(_currentCatInFocus);
+                OnSelectCat(_currentCatInFocus);
+                _currentCatInFocus.BeginConversation();
+                _cameraAnimationInProgress = true;
             }
         }
 
+        /*
         public void FavFoodDialogue()
         {
             if (_currentCatInFocus != null)
@@ -212,12 +183,16 @@ namespace GameJamCat {
                 }
             }
         }
+        */
 
+        /*
         private void DisableOptionsBox()
         {
             _dialogueOptions.SetActive(false);
         }
+        */
 
+        /*
         public void CatNameDialogue()
         {
             if (_currentCatInFocus != null)
@@ -229,7 +204,9 @@ namespace GameJamCat {
                 }
             }
         }
+        */
 
+        /*
         public void CatToyDialogue()
         {
             if (_currentCatInFocus != null)
@@ -241,7 +218,9 @@ namespace GameJamCat {
                 }
             }
         }
+        */
 
+        /*
         public void SetCatNameInDialogue()
         {
             if (_currentCatInFocus != null)
@@ -252,6 +231,24 @@ namespace GameJamCat {
                     boxname.SetCatNameInDialogueBox(_currentCatInFocus.CatDialogue._catName);
                 }
                 
+            }
+        }
+        */
+
+        private void HandleStateChange(State state)
+        {
+            UpdateCursor(state);
+            switch (state)
+            {
+                case State.Pregame:
+                    break;
+                case State.Play:
+                    ReturnCameraToFocus();
+                    break;
+                case State.Dialogue:
+                    break;
+                case State.EndGame:
+                    break;
             }
         }
 

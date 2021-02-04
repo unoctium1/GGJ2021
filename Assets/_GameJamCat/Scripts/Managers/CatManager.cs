@@ -75,6 +75,7 @@ namespace GameJamCat
         private CatBehaviour GetRandomCat()
         {
             CatBehaviour cat = _catGenerator.GetRandomCat();
+            cat.IsNameKnown = false;
             var spawnArea = Utilities.GetRandom(_spawnArea);
             var position = spawnArea.GetRandomUnitWithSphere();
             var scale = Utilities.GetRandom(_catScaleRange);

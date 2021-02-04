@@ -7,7 +7,7 @@ using Sirenix.OdinInspector;
 
 namespace GameJamCat
 {
-    public class DialogueBoxBehaviour : TextMeshProUGUI
+    public class DialogueBoxText : TextMeshProUGUI
     {
         public event Action OnReadCompleted;
         

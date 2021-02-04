@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace GameJamCat
 {
-    public class DossierViewBehaviour : MonoBehaviour
+    public class DossierViewBehaviour : ViewBehaviour
     {
         private const string OpenLabel = "open";
         private const string CloseLabel = "close";
@@ -17,17 +17,18 @@ namespace GameJamCat
         [Title("Properties")]
         [SerializeField] private KeyCode _dossierButton = KeyCode.Tab;
 
+        //Set open by default
         private bool _isDossierOpen = true;
 
         public event Action<bool> OnDossierStateChange;
 
-        public bool IsDossierOpen
+        public override bool IsOpen
         {
             get => _isDossierOpen;
             set
             {
-                _isDossierOpen = value;
-                if (OnDossierStateChange != null)
+                _isDossierOpen = value; //test
+                if(OnDossierStateChange != null)
                 {
                     OnDossierStateChange(_isDossierOpen);
                 }
@@ -50,31 +51,19 @@ namespace GameJamCat
             }
         }
 
-        public void Initialize()
+        public override void Initialize()
         {
-            if (_dossierMenuView != null)
-            {
-                _dossierMenuView.Initialize();
-                _dossierMenuView.SetDossierOpen(_isDossierOpen);
-            }
-
+            _menuView = _dossierMenuView;
+            base.Initialize();
             SetPressToOpenCloseText();
         }
         
         public void SetPressToOpenCloseText()
         {
-            var openOrClose = IsDossierOpen ? CloseLabel : OpenLabel;
+            var openOrClose = IsOpen ? CloseLabel : OpenLabel;
             if (_pressToOpenClose != null)
             {
                 _pressToOpenClose.text = string.Format(InstructionalLabel, _dossierButton.ToString(), openOrClose);
-            }
-        }
-
-        public void UpdateDossierView()
-        {
-            if (_dossierMenuView != null)
-            {
-                _dossierMenuView.SetDossierOpen(IsDossierOpen);
             }
         }
 
@@ -90,7 +79,7 @@ namespace GameJamCat
             }
         }
 
-        public void CleanUp()
+        public override void CleanUp()
         {
             
         }
@@ -99,8 +88,8 @@ namespace GameJamCat
         {
             if (Input.GetKeyDown(_dossierButton) && StateManager.Instance.GetState() != State.Dialogue)
             {
-                IsDossierOpen = !IsDossierOpen;
-                UpdateDossierView();
+                IsOpen = !IsOpen;
+                UpdateView();
                 SetPressToOpenCloseText();
             }
         }

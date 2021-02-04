@@ -9,8 +9,11 @@ namespace GameJamCat
     {
         private readonly IStateManager _stateManager = StateManager.Instance;
 
-        [SerializeField] private ActionBoxMenu _actionBoxMenu = null;
-        [SerializeField] private ActionBoxView _actionBoxView = null;
+        [Title("Action Box")]
+        [SerializeField] private ActionBoxViewBehaviour _actionBoxView = null;
+
+        [Title("Dialogue")]
+        [SerializeField] private DialogueBoxViewBehaviour _dialogueBoxView = null;
 
         [Title("Screen Transition")]
 
@@ -30,7 +33,11 @@ namespace GameJamCat
 
         [SerializeField] private GameObject _crossHairText = null;
 
+        private CatBehaviour _targetCat = null;
         public bool ClaimedCat { get; set; } = false;
+
+        // A little hacky, but this ensures when the claim button is passed the world manager is notified
+        public event Action<CatBehaviour> OnClaimedCat;
 
         /// <summary>
         /// Initialize UIManager, setup values here
@@ -43,6 +50,17 @@ namespace GameJamCat
             {
                 _dossierView.Initialize();
                 _dossierView.OnDossierStateChange += HandleOnDossierStateChange;
+            }
+            if (_actionBoxView != null)
+            {
+                _actionBoxView.Initialize();
+                _actionBoxView.OnTalkToCat += HandleOnTalkToCat;
+                _actionBoxView.OnClaimCat += HandleOnClaimCat;
+            }
+
+            if(_dialogueBoxView != null)
+            {
+                _dialogueBoxView.Initialize();
             }
 
             if (_pregameDialogueBox != null)
@@ -72,10 +90,8 @@ namespace GameJamCat
             }
             _crossHairText.SetActive(false);
             SetLives(lives);
-            
+
         }
-
-
 
         public void UpdateTimer(float time)
         {
@@ -95,6 +111,22 @@ namespace GameJamCat
             {
                 _transitionViewBehaviour.OnCompleteFade -= HandleOnFadeComplete;
             }
+            if (_dossierView != null)
+            {
+                _dossierView.OnDossierStateChange -= HandleOnDossierStateChange;
+            }
+
+            if (_pregameDialogueBox != null)
+            {
+                _pregameDialogueBox.OnDialogueCompleted -= HandleOnDialogueCompleted;
+            }
+            if (_actionBoxView != null)
+            {
+                _actionBoxView.CleanUp();
+                _actionBoxView.OnTalkToCat -= HandleOnTalkToCat;
+                _actionBoxView.OnClaimCat -= HandleOnClaimCat;
+            }
+
         }
 
         public void SetLives(int lives)
@@ -115,7 +147,7 @@ namespace GameJamCat
 
         public void SetUpDossier(CatBehaviour targetCat)
         {
-            if(_dossierView != null)
+            if (_dossierView != null)
             {
                 _dossierView.SetTargetCat(targetCat.CatDialogue);
             }
@@ -123,7 +155,7 @@ namespace GameJamCat
 
         public void SetUpDossierTexture(Texture catTex)
         {
-            if(_dossierView != null)
+            if (_dossierView != null)
             {
                 _dossierView.SetCatImage(catTex);
             }
@@ -134,9 +166,24 @@ namespace GameJamCat
             _crossHairText.SetActive(state);
         }
 
-        public void SetTalkingToCat(CatBehaviour cat)
+        public void SetFocusedCat(CatBehaviour cat)
         {
-            //
+            _targetCat = cat;
+            if (_actionBoxView != null)
+            {
+                if (cat.IsNameKnown)
+                {
+                    _actionBoxView.SetTargetCat(cat.CatDialogue._catName);
+                }
+                else 
+                {
+                    _actionBoxView.SetTargetCat("???");
+                }
+            }
+            if (_dialogueBoxView != null)
+            {
+                _dialogueBoxView.SetCat(cat);
+            }
         }
 
         private void OnDestroy()
@@ -155,6 +202,11 @@ namespace GameJamCat
             _pregameDialogueBox.StartAnimation();
 #endif
             SetCrossHairState(false);
+            if (_dialogueBoxView != null && _dialogueBoxView.IsOpen)
+            {
+                _dialogueBoxView.IsOpen = false;
+                _dialogueBoxView.UpdateView();
+            }
         }
 
         private void OnPlaySet()
@@ -165,7 +217,20 @@ namespace GameJamCat
                 _dossierView.SetPressToOpenCloseText();
             }
 
-          
+            if (_actionBoxView != null && _actionBoxView.IsOpen)
+            {
+                _actionBoxView.IsOpen = false;
+                _actionBoxView.UpdateView();
+            }
+
+            if(_dialogueBoxView != null && _dialogueBoxView.IsOpen)
+            {
+                _dialogueBoxView.IsOpen = false;
+                _dialogueBoxView.UpdateView();
+            }
+
+
+
         }
 
         private void OnDialogueSet()
@@ -174,25 +239,50 @@ namespace GameJamCat
 
             if (_dossierView != null)
             {
-                if (_dossierView.IsDossierOpen)
+                if (_dossierView.IsOpen)
                 {
-                    _dossierView.IsDossierOpen = false;
-                    _dossierView.UpdateDossierView();
+                    _dossierView.IsOpen = false;
+                    _dossierView.UpdateView();
                 }
 
                 _dossierView.SetInstructionLabel(false);
                 _dossierView.SetPressToOpenCloseText();
             }
-            
+            if (_actionBoxView != null)
+            {
+                if (!_actionBoxView.IsOpen)
+                {
+                    _actionBoxView.IsOpen = true;
+                    _actionBoxView.UpdateView();
+                }
+            }
+            if (_dialogueBoxView != null && _dialogueBoxView.IsOpen)
+            {
+                _dialogueBoxView.IsOpen = false;
+                _dialogueBoxView.UpdateView();
+            }
+
+
         }
 
         private void OnEndGameSet()
         {
             SetCrossHairState(false);
 
+            if (_actionBoxView != null && _actionBoxView.IsOpen)
+            {
+                _actionBoxView.IsOpen = false;
+                _actionBoxView.UpdateView();
+            }
+
             if (_endgameViewBehaviour != null)
             {
-                _endgameViewBehaviour.DisplayEndPanel(ClaimedCat); 
+                _endgameViewBehaviour.DisplayEndPanel(ClaimedCat);
+            }
+            if (_dialogueBoxView != null && _dialogueBoxView.IsOpen)
+            {
+                _dialogueBoxView.IsOpen = false;
+                _dialogueBoxView.UpdateView();
             }
         }
         #endregion
@@ -230,11 +320,31 @@ namespace GameJamCat
             SetCrossHairState(!isOpen);
         }
 
+
         private void HandleOnDialogueCompleted()
         {
             if (_transitionViewBehaviour != null)
             {
                 _transitionViewBehaviour.SwitchBlackScreen(true);
+            }
+        }
+
+        private void HandleOnClaimCat()
+        {
+            OnClaimedCat(_targetCat);
+        }
+
+        private void HandleOnTalkToCat()
+        {
+            if (_actionBoxView != null)
+            {
+                _actionBoxView.IsOpen = false;
+                _actionBoxView.UpdateView();
+            }
+            if (_dialogueBoxView != null && !_dialogueBoxView.IsOpen)
+            {
+                _dialogueBoxView.IsOpen = true;
+                _dialogueBoxView.UpdateView();
             }
         }
         #endregion

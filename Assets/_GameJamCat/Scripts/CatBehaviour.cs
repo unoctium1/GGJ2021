@@ -21,6 +21,7 @@ namespace GameJamCat
         [SerializeField] private float _petDuration = 0.5f;
         [SerializeField] private AudioSource _source;
 
+        public bool IsNameKnown { get; set; } 
         
         public Sprite ParticleSprite { get; set; }
         public Gradient ParticleStartColorRange { get; set; }

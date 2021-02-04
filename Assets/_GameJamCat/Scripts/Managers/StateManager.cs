@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace GameJamCat
 {
@@ -53,6 +54,7 @@ namespace GameJamCat
 
         public void SetState(State state)
         {
+            Debug.Log($"Current state: {state}");
             _gameState = state;
             OnStateChanged?.Invoke(state);
         }

@@ -7,10 +7,9 @@ using UnityEngine.UI;
 
 namespace GameJamCat
 {
-    public class DossierMenuView : MonoBehaviour
+    public class DossierMenuView : MenuView
     {
         private const string DossierText = "likes {0}";
-        private const float AnimationDuration = 0.5f;
 
         [Title("Placeholder Values")]
         [SerializeField] private Texture2D _defaultTex;
@@ -31,8 +30,6 @@ namespace GameJamCat
         [SerializeField] Sprite _salmonIcon, _chickenIcon, _pumpkinIcon, _dryKibbleIcon, _wetKibbleIcon, _kibbleIcon, _boneIcon, _beefIcon = null;
         [SerializeField] Sprite _yarnBallsIcon, _cardboardBoxIcon, _fishingRodIcon, _catnipSackIcon, _hijinksIcon, _scratchingPostIcon, _laserIcon, _tennisBall = null;
 
-        private float _animationDossierDistance = 0;
-
         //Tentative Use Case from UI Manager
         public void SetNewCat(CatCustomisation catDescription, Texture2D catimage = null)
         {
@@ -49,21 +46,6 @@ namespace GameJamCat
         public void SetTexture(Texture catimage)
         {
             SetUIElement(_catImage, catimage);
-        }
-
-        public void Initialize()
-        {
-            var rectTransform = GetComponent<RectTransform>();
-            // Top
-            rectTransform.offsetMax = new Vector2(rectTransform.offsetMax.x, -_animationDossierDistance);
-            // Bottom
-            rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, -_animationDossierDistance);
-        }
-
-        public void SetDossierOpen(bool isCurrentlyOpen)
-        {
-            var moveDirection = isCurrentlyOpen ? Vector3.up : Vector3.down;
-            transform.DOBlendableLocalMoveBy(moveDirection * _animationDossierDistance, AnimationDuration, true);
         }
 
         private void SetName(string catName)
@@ -99,11 +81,6 @@ namespace GameJamCat
             }
         }
 
-        private void Awake()
-        {
-            _animationDossierDistance = Screen.height * 0.9f;
-        }
-
         public (Sprite, string) GetFoodSprite(Food food)
         {
             return food switch
@@ -135,6 +112,11 @@ namespace GameJamCat
                 Toy.Laser => (_laserIcon, "LASER"),
                 _ => (null, null)
             };
+        }
+
+        protected override void SetDistance()
+        {
+            _animationDistance = Screen.height * 0.9f;
         }
     }
 }
